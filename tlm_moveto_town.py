@@ -10,7 +10,7 @@
 # 3.check if the tlm in its town section(1 is ture, 0 is false)
 #   create a list of tlm in the wrong town section
 #   create a list of coordinates for the tlm to go
-
+import arcpy
 cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["TLM","SHAPE@"])
 tlm_move_to=[]
 tlm_select=[]
