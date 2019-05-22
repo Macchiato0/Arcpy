@@ -7,7 +7,7 @@ cursor=arcpy.da.SearchCursor("AuditArea selection",["COMMENTS"])
 
 row_list=[row[0] for row in cursor]
 
-#normalize and ignore some confused unicode data
+# normalize and ignore some confused unicode data
 
 comment=[unicodedata.normalize('NFKD', i).encode('ascii','ignore') for i in row_list]
 
@@ -17,6 +17,12 @@ import re
 
 # split every string in cooment into word by word 
 comment_split=[re.split("\s", i) for i in comment]
+
+# parse the comment and select the address
+
+for i in comment:
+  for j in j
+  print (x)
 
 
 
