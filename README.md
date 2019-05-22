@@ -7,3 +7,6 @@ Move service points to transformers
 tlm_moveto_town:
 Move transformers to their geo section.
 
+move_sp_to_16section:
+A function to move sp based on their town section number
+
