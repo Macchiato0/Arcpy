@@ -18,10 +18,16 @@ import re
 comment_split=[re.split("\s", i) for i in comment]
 
 # parse the comment and select the address
+# 1. assume that all street address start with a number, excludes the number of street (always in (0,100)) or the meter number (7 digits)
+for i in comment_split:
+    num1=[int(j) for j in i if j.isdigit() and 100<int(re.findall("\d+", j)[0])<10000]
+    st_number=max(num1) if len(num1)>0 else None
+    str(st_number)
+    
+    
 
-for i in comment_split[0]:
-    if i.isdigit() and int(re.findall("\d+", i)[0])<10000:
-      print i
+
+    
 
 
 
