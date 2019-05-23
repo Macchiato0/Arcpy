@@ -4,8 +4,9 @@
 import arcpy
 
 cursor=arcpy.da.SearchCursor("AuditArea selection",["COMMENTS"])
-
 row_list=[row[0] for row in cursor]
+cursor=arcpy.da.SearchCursor("AuditArea selection",["OBJECTID"])
+row_oid=[row[0] for row in cursor]
 
 # normalize and ignore some confused unicode data
 import unicodedata
