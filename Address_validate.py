@@ -24,7 +24,8 @@ for i in comment_split:
     st_number=max(num1) if len(num1)>0 else None
     text_number='{}'.format(st_number) if st_number>0 else None
     position=i.index(text_number) if text_number in i else None
-    print position
+    address=i[position:position+3] if position else None 
+    print address
     
     
 
