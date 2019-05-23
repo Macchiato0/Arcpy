@@ -24,10 +24,13 @@ for i in comment_split:
     st_number=max(num1) if len(num1)>0 else None
     text_number='{}'.format(st_number) if st_number>0 else None
     position=i.index(text_number) if text_number in i else None
-    address=i[position:position+3] if position else None 
-    print address
+    address_list=i[position:position+3] if position else None
+    address=' '.join(address_list) if address_list else None
+    address1=address.replace(".",'') if address else None
+    address2=address1.replace(",",'') if address1 else None
     
     
+# select address2 from the table of service address
 
 
     
