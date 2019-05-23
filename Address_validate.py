@@ -22,7 +22,9 @@ comment_split=[re.split("\s", i) for i in comment]
 for i in comment_split:
     num1=[int(j) for j in i if j.isdigit() and 100<int(re.findall("\d+", j)[0])<10000]
     st_number=max(num1) if len(num1)>0 else None
-    str(st_number)
+    text_number='{}'.format(st_number) if st_number>0 else None
+    position=i.index(text_number) if text_number in i else None
+    print position
     
     
 
