@@ -48,7 +48,9 @@ for key in Audit_id_address_1:
 Audit_Sp
 
 
+# 6. check if all the audit_area has a coresponding service point
 
+#
     
 
 
