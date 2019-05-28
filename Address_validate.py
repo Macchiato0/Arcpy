@@ -20,6 +20,7 @@ comment_split=[re.split("\s", i) for i in comment]
 
 # parse the comment and select the address
 # 1. assume that all street address start with a number, excludes the number of street (always in (0,100)) or the meter number (7 digits)
+Audit_id_address_1={}
 for i in comment_split:
     num1=[int(j) for j in i if j.isdigit() and 100<int(re.findall("\d+", j)[0])<10000]
     st_number=max(num1) if len(num1)>0 else None
@@ -29,7 +30,7 @@ for i in comment_split:
     address=' '.join(address_list) if address_list else None
     address1=address.replace(".",'') if address else None
     address2=address1.replace(",",'') if address1 else None
-    
+    Audit_id_address_1[row_oid[comment_split.index(i)]]=address2
     
 # select address2 from the table of service address
 
