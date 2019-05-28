@@ -34,6 +34,12 @@ for i in comment_split:
     Audit_id_address_1[row_oid[comment_split.index(i)]]=address2
     
 # 3. select parsed Audit_id_address_1 from address table and find the oid of service point
+# 4. create a hashable dictionary key as Audit_area oid and value as service point oid. 
+Audit_Sp={}
+for key in Audit_id_address_1:
+    street_string="STREET like '%{}%'".format(Audit_id_address_1[key])
+    cursor=arcpy.da.SearchCursor("ELECDIST.ServiceAddress",["*"],street_string)
+    
 
 
 
