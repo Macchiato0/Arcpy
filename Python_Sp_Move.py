@@ -73,6 +73,12 @@ for i in cursor:
     tlm_s.append(i[0])
 set(tlm_list)-set(tlm_s)
 
+# if there are duplicate tlm
+
+for i in tlm_s:
+  if tlm_s.count(i)>1:
+    print i
+
 # set is substractable :set(a)-set(b)
 # turn set to be list: list(set) 
 # merge two list by + : l3=l1+l2
