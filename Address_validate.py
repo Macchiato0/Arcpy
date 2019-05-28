@@ -38,8 +38,14 @@ for i in comment_split:
 Audit_Sp={}
 for key in Audit_id_address_1:
     street_string="STREET like '%{}%'".format(Audit_id_address_1[key])
-    cursor=arcpy.da.SearchCursor("ELECDIST.ServiceAddress",["*"],street_string)
+    sp_oid=[]
+    cursor=arcpy.da.SearchCursor("ELECDIST.ServiceAddress",["SERVICE_OID"],street_string)
+    for row in cursor:
+        sp_oid.append(row[0])
+    Audit_Sp[key]=sp_oid
     
+# 5. check if the Audit_Area and Service Point are at the right location by go through Audit_Area and service point in  
+Audit_Sp
 
 
 
