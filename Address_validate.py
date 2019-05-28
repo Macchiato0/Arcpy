@@ -45,7 +45,10 @@ for key in Audit_id_address_1:
     Audit_Sp[key]=sp_oid
     
 # 5. check if the Audit_Area and Service Point are at the right location by go through Audit_Area and service point in  
-Audit_Sp
+# print out the audit area with the non-null sp oid
+for key in Audit_Sp:
+    if Audit_Sp[key] >1:
+        print key, Audit_Sp[key] 
 
 
 # 6. check if all the audit_area has a coresponding service point
