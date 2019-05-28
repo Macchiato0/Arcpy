@@ -20,6 +20,7 @@ comment_split=[re.split("\s", i) for i in comment]
 
 # parse the comment and select the address
 # 1. assume that all street address start with a number, excludes the number of street (always in (0,100)) or the meter number (7 digits)
+# 2. creat a hashable Audit_id_address_1 dataset with key as audit area id and value as the parsed address
 Audit_id_address_1={}
 for i in comment_split:
     num1=[int(j) for j in i if j.isdigit() and 100<int(re.findall("\d+", j)[0])<10000]
@@ -32,7 +33,8 @@ for i in comment_split:
     address2=address1.replace(",",'') if address1 else None
     Audit_id_address_1[row_oid[comment_split.index(i)]]=address2
     
-# select address2 from the table of service address
+# 3. select parsed Audit_id_address_1 from address table and find the oid of service point
+
 
 
     
