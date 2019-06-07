@@ -2,5 +2,5 @@
 def is_intable(x): 
     cursor=arcpy.da.SearchCursor("ELECDIST.ServiceAddress",["SERVICEPOINTOBJECTID"],x)
     id=[row[0] for row in cursor]
-    if id return id else return 0
+    return id
    
