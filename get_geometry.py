@@ -4,7 +4,26 @@
 
 where clause:"DRG is not null and LATITUDE is null and LONGITUDE is null"
 
-#select the sp first, output is point geometry  
+# get the XY of a point geometry in decimal degree
+def get_XY_degree(pt):
+    lat=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.Y
+    long=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.X
+    coor=(lat,long)
+    return coor
+
+#decorator to get XY in decimal degree
+def get_XY(func):
+    def wrapper():
+        A_list=[i[1] for i in func()]#a list of point geometry
+        B_list=[i[0] for i in func()]#b list of point oid
+        XY_list=map(get_XY_degree, A_list)
+        m_t=lambda a,b : (a,b)
+        result=map(m_t, B_list,XY_list)
+        return result
+    return wrapper
+
+#select the sp first, output is point geometry 
+@get_XY
 def get_geometry():
     #make sure service points are selected
     selectedCount = len([int(fid) for fid in arcpy.Describe(r"Customers & Transformers\Service Point").fidset.split(";") if fid != ''])
@@ -14,25 +33,6 @@ def get_geometry():
         return A_list
     else:
         print "select points please"
-
-# get the XY of a point geometry in decimal degree
-deg get_XY_degree(pt):
-    lat=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.Y
-    long=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.X
-    coor=(lat,long)
-    return coor
-
-#decorator for 
-def get_XY(func):
-    def wrapper():
-        A_list=[i[1] for i in func()]#a list of point geometry
-        result=map(get_XY_degree, A_list)
-        return result
-    return wrapper
-        
-        
-        
-        
         
         
 def update_geometry():
