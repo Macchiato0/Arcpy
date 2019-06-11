@@ -6,7 +6,7 @@ where clause:"DRG is not null and LATITUDE is null and LONGITUDE is null"
 def get_geometry():
     #make sure service points are selected
     selectedCount = len([int(fid) for fid in arcpy.Describe(r"Customers & Transformers\Service Point").fidset.split(";") if fid != ''])
-    if selectedCount<20000:
+    if selectedCount>0:
         cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Service Point",["OID@","SHAPE@XY"])
         A_list=[row for row in cursor]
         return A_list
