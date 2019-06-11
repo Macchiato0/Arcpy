@@ -27,7 +27,7 @@ def get_XY(func):
 def get_geometry():
     #make sure service points are selected
     selectedCount = len([int(fid) for fid in arcpy.Describe(r"Customers & Transformers\Service Point").fidset.split(";") if fid != ''])
-    if selectedCount>0:
+    if selectedCount==0:
         cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Service Point",["OID@","SHAPE@"])
         A_list=[row for row in cursor]
         return A_list
@@ -37,8 +37,16 @@ def get_geometry():
         
 def update_geometry():
     selectedCount = len([int(fid) for fid in arcpy.Describe(r"Customers & Transformers\Service Point").fidset.split(";") if fid != ''])
-    if selectedCount>0:
+    if selectedCount==1:
+        Lat=get_geometry()[0][1][0]
+        Long=get_geometry()[0][1][1]
         cursor=arcpy.da.UpdateCursor(r"Customers & Transformers\Service Point",["LATITUDE","LONGITUDE","SHAPE@XY"])
+        for row in cursor:
+            row[0]=Lat
+            row[1]=Long
+            cursor.updateRow(row)
+    else:
+        print "select service point first"
         
 
     
