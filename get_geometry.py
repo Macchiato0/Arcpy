@@ -7,8 +7,8 @@ where clause:"DRG is not null and LATITUDE is null and LONGITUDE is null"
 # get the XY of a point geometry in decimal degree
 def get_XY_degree(pt):
     lat=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.Y
-    long=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.X
-    coor=(lat,long)
+    lon=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.X
+    coor=(lat,lon)
     return coor
 
 #decorator to get XY in decimal degree
