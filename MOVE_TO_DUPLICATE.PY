@@ -1,3 +1,4 @@
+#Function to move point A to point B
 def move_to_duplicate(sp1,sp2):
     try:
         where="OBJECTID={}".format(sp1)
