@@ -1,4 +1,4 @@
-def move_sp_audit(sp1,sp2):
+def move_to_duplicate(sp1,sp2):
     try:
         where="OBJECTID={}".format(sp1)
         cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Service Point",["SHAPE@XY"],where)
