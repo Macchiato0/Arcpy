@@ -1,9 +1,10 @@
 def move_sp_audit(sp1,sp2):
     try:
-       cursor=arcpy.da.UpdateCursor(r"Customers & Transformers\Service Point",["SHAPE@XY"],where)
-        coor=get_tlm_location(tlm_oid)
-        print coor
-        where="OBJECTID={}".format(oid)
+        where="OBJECTID={}".format(sp1)
+        cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Service Point",["SHAPE@XY"],where)
+        for row in cursor:
+            coor=row[0]
+        where="OBJECTID={}".format(sp2)
         cursor=arcpy.da.UpdateCursor(r"Customers & Transformers\Service Point",["SHAPE@XY"],where)
         for row in cursor:
             row[0]=coor
