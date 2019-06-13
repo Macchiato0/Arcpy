@@ -7,7 +7,7 @@ def get_tlm_location(tlm_oid):
         result=row[0]
     return result
 
-def move_sp_audit(oid,tlm_oid):
+def move_sp_tlm(oid,tlm_oid):
     try:
         coor=get_tlm_location(tlm_oid)
         print coor
