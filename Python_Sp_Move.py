@@ -23,37 +23,37 @@ select_oid = arcpy.da.SearchCursor(r"Customers & Transformers\Service Point", ["
 select_oid = arcpy.da.SearchCursor("Service Point selection", ["OID@","TLM"])
 
 oid = [] #list of device location
-oid_tlm=[]#list of tlm, tlm should be in str because tlm may start at 0
+num_tlm=[]#list of tlm, tlm should be in str because tlm may start at 0
 
 # create a list of device location for every sp
 for row1 in select_oid:
     x1 = row1[0]
     x2 = row1[1]
     oid.append(x1)
-    oid_tlm.append(x2)
+    num_tlm.append(x2)
 
 # if true
-print len(oid),len(oid_tlm)
+print len(oid),len(num_tlm)
 
 # create a list of tlm coordinate for every device location 
 
 coor = [] #list of XY tuple
 
-for tlm in oid_tlm:
+for tlm in num_tlm:
     sel = "TLM = " + "'%s'" % tlm
-    select_tlm = arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["SHAPE@XY"], sel)
+    select_tlm = arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["SHAPE@"], sel)
     for tlm_row in select_tlm: 
         coor.append(tlm_row [0])
 
 
 
 # same?
-print len(oid), len(oid_tlm), len(coor) 
+print len(oid), len(num_tlm), len(coor) 
 
 # if len(coor) is not consistant with len(dl_tlm) 
 # find the missing tlm
 
-tlm_set=set(oid_tlm)
+tlm_set=set(num_tlm)
 tlm_list=list(tlm_set)
 
 t_p=","
@@ -83,7 +83,8 @@ for i in tlm_s:
 # turn set to be list: list(set) 
 # merge two list by + : l3=l1+l2
 
-
+"""
+old code
 for sp in oid:
     try:
         x = "OBJECTID = {}".format(sp)
@@ -94,19 +95,24 @@ for sp in oid:
             cur.updateRow(ro)
     except:
         pass
-      
+""" 
+#put oid and point of tlm in a dictionary
+oid_sp_pt_tlm=dict(zip(oid,coor))
+
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
-edit = arcpy.da.Editor(workspace)
-edit.startEditing(False, True)
-edit.startOperation()
-for sp in oid:
-    where="OBJECTID={}".format(TLM)
-    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.Transformer',["SHAPE@"],where)
-    for row in cursor:
-        pt=row[0]
-    where="OBJECTID={}".format(sp)
+
+#function to move a sp based on oid to an pt object
+def MOVE_A2Pt(a,pt):
+    edit = arcpy.da.Editor(workspace)
+    edit.startEditing(False, True)
+    edit.startOperation()
+    where="OBJECTID={}".format(a)
     cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
     for row in cursor:
         row[0]=pt
         cursor.updateRow(row)
-edit.stopOperation()
+    edit.stopOperation()
+    
+for sp in oid_sp_pt_tlm:
+    pt=oid_sp_pt_tlm[sp]
+    MOVE_A2Pt(sp,pt)
