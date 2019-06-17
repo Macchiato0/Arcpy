@@ -9,7 +9,7 @@
 # test if all the transformers available
 # a. create a list of distinct transformers in excel (sort-->advance-->unique)
 # b.select them in the secondary transformer table |TEXT(value,"'0000000000'")
-                                                 |value&","&value
+#                                                 |value&","&value
 
 # create a list of devicelocation for removed sp
 
@@ -93,5 +93,20 @@ for sp in oid:
             ro[0] = coor[ii]    
             cur.updateRow(ro)
     except:
-        pass   
-
+        pass
+      
+workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+edit = arcpy.da.Editor(workspace)
+edit.startEditing(False, True)
+edit.startOperation()
+for sp in oid:
+    where="OBJECTID={}".format(TLM)
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.Transformer',["SHAPE@"],where)
+    for row in cursor:
+        pt=row[0]
+    where="OBJECTID={}".format(sp)
+    cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
+    for row in cursor:
+        row[0]=pt
+        cursor.updateRow(row)
+edit.stopOperation()
