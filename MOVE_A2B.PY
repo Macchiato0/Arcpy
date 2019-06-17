@@ -1,6 +1,5 @@
 #Function to move point A to point B, a an b are oid of points.
 def MOVE_A2B(a,b):
-    fc = arcpy.GetParameterAsText(0)
     workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
