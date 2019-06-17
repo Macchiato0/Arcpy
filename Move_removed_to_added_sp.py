@@ -1,4 +1,4 @@
-1. make sure the removed sp are not connected to the network
+# 1. make sure the removed sp are not connected to the network
 
 
 #set a list of object id of remove sp
@@ -25,7 +25,7 @@ print len(remove_pt), len(remove_obj)
 added_obj=[]
 added_pt=[]
 
-cursor = arcpy.da.SearchCursor("Service Point selection 2",["SHAPE@","OID@"])
+cursor = arcpy.da.SearchCursor('Service Point selection2',["SHAPE@","OID@"])
 
 for i in cursor:
     added_pt.append(i[0])
@@ -98,7 +98,7 @@ coor = []
 
 for i in match_added_pt:
     if i is not None:
-        pt=i.centroid.X, i.centroid.Y
+        pt=i#.centroid.X, i.centroid.Y
         coor.append(pt)
     else:
         coor.append(None)
@@ -118,8 +118,35 @@ for i in match_added_obj:
         del_add.append(i)
 
 #make a list of match_added_obj in excel-->select them in service point-->delet them
+#make a dictionary of removed sp id and added pt geomerty
+remove_obj_added=dict(zip(remove_obj,match_added_pt))
+
+
+
+def MOVE_r2a(r,a_pt):
+    workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+    edit = arcpy.da.Editor(workspace)
+    edit.startEditing(False, True)
+    edit.startOperation()
+    where="OBJECTID={}".format(r)
+    cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
+    for row in cursor:
+        row[0]=a_pt
+        cursor.updateRow(row)
+    edit.stopOperation()
+    
 
 sp_move=[]
+for r in remove_obj_added:
+    a_pt=remove_obj_added
+    if a_pt is not None:
+        MOVE_r2a(r,a_pt)
+        sp_move.append(r)
+    else:
+        continue
+
+"""
+old code
 for sp in remove_obj:
     ii=remove_obj.index(sp)
     if coor[ii] is not None:
