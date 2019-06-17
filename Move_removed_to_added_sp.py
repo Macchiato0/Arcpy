@@ -35,7 +35,7 @@ print len(added_pt), len(added_obj)
 print len(added_pt)==len(added_obj)
 
 #calculate the distance between removed and added 
-#if minimum distance less than 90, the remove and added should be the couple
+#if minimum distance less than 10, the remove and added should be the couple
 
 match_added_pt=[]
 match_added_obj=[]
@@ -45,7 +45,7 @@ for i in remove_pt:
         dist=i.distanceTo(j)
         meters.append(dist)
     added_i=meters.index(min(meters))
-    if min(meters)<30:   
+    if min(meters)<10:   
         match_pt=added_pt[added_i]
         match_id=added_obj[added_i]
         match_added_pt.append(match_pt)
@@ -65,43 +65,10 @@ print len(match_added_pt)==len(match_added_obj)
 #find the duplicates in object list and replace the duplicates with None
 
 for i in set(match_added_obj):
-    if i is not None:
-        print i
-        while match_added_obj.count(i)>1:
-            po=match_added_obj.index(i)
-            match_added_obj[po]=None
-            print po
-
-#check if None is the only duplicates
-for i in set(match_added_obj):
-    n=match_added_obj.count(i)
-    if n>1:
-        print i
-
-
-#replace the duplicates in point list with None based on ID list
-
-for i in range(len(match_added_obj)):
-    if match_added_obj[i]==None:
-        match_added_pt[i]=None
-
-#check if None is the only duplicates
-for i in set(match_added_pt):
-    n=match_added_pt.count(i)
-    if n>1:
-        print i 
-
-#move the removed sp to the added sp
-
-#create a list of XY tuple for the matched added sp
-coor = []
-
-for i in match_added_pt:
-    if i is not None:
-        pt=i#.centroid.X, i.centroid.Y
-        coor.append(pt)
-    else:
-        coor.append(None)
+   if match_added_obj.count(i)>1:
+       print i
+   else:
+       continue
     
 #move the removed sp to coor
 ####RuntimeError: Objects in this class cannot be updated outside an edit session [ELECDIST.ServicePoint]
@@ -116,34 +83,36 @@ for i in match_added_obj:
     if i is not None:
         print i
         del_add.append(i)
+print len(del_add)
 
 #make a list of match_added_obj in excel-->select them in service point-->delet them
 #make a dictionary of removed sp id and added pt geomerty
+
 remove_obj_added=dict(zip(remove_obj,match_added_pt))
 
 
 
-def MOVE_r2a(r,a_pt):
-    workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+def MOVE_A2Pt(a,pt):
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
     edit.startOperation()
-    where="OBJECTID={}".format(r)
+    where="OBJECTID={}".format(a)
     cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
     for row in cursor:
-        row[0]=a_pt
+        row[0]=pt
         cursor.updateRow(row)
     edit.stopOperation()
     
 
+#only move removed sp with added sp nearby
+remove_obj_added2={key:v for (key,v) in remove_obj_added.items() if v is not None}
+
+
 sp_move=[]
-for r in remove_obj_added:
-    a_pt=remove_obj_added
-    if a_pt is not None:
-        MOVE_r2a(r,a_pt)
-        sp_move.append(r)
-    else:
-        continue
+for key in remove_obj_added2:
+    pt=remove_obj_added2[key]
+    MOVE_r2a(key,pt)
+    sp_move.append(key)
 
 """
 old code
