@@ -92,7 +92,7 @@ remove_obj_added=dict(zip(remove_obj,match_added_pt))
 
 
 
-def MOVE_A2Pt(a,pt):
+def move_a2pt(a,pt):
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
     edit.startOperation()
@@ -111,7 +111,7 @@ remove_obj_added2={key:v for (key,v) in remove_obj_added.items() if v is not Non
 sp_move=[]
 for key in remove_obj_added2:
     pt=remove_obj_added2[key]
-    MOVE_A2Pt(key,pt)
+    move_a2pt(key,pt)
     sp_move.append(key)
 
 """
