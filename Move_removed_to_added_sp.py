@@ -25,7 +25,7 @@ print len(remove_pt), len(remove_obj)
 added_obj=[]
 added_pt=[]
 
-cursor = arcpy.da.SearchCursor('Service Point selection2',["SHAPE@","OID@"])
+cursor = arcpy.da.SearchCursor('Service Point selection 2',["SHAPE@","OID@"])
 
 for i in cursor:
     added_pt.append(i[0])
@@ -35,7 +35,7 @@ print len(added_pt), len(added_obj)
 print len(added_pt)==len(added_obj)
 
 #calculate the distance between removed and added 
-#if minimum distance less than 10, the remove and added should be the couple
+#if minimum distance less than 20m, the remove and added should be the couple
 
 match_added_pt=[]
 match_added_obj=[]
@@ -45,7 +45,7 @@ for i in remove_pt:
         dist=i.distanceTo(j)
         meters.append(dist)
     added_i=meters.index(min(meters))
-    if min(meters)<10:   
+    if min(meters)<20:   
         match_pt=added_pt[added_i]
         match_id=added_obj[added_i]
         match_added_pt.append(match_pt)
@@ -111,7 +111,7 @@ remove_obj_added2={key:v for (key,v) in remove_obj_added.items() if v is not Non
 sp_move=[]
 for key in remove_obj_added2:
     pt=remove_obj_added2[key]
-    MOVE_r2a(key,pt)
+    MOVE_A2Pt(key,pt)
     sp_move.append(key)
 
 """
