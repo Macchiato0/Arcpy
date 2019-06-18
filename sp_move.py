@@ -102,7 +102,7 @@ oid_sp_pt_tlm=dict(zip(oid,coor))
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
 
 #function to move a sp based on oid to an pt object
-def MOVE_A2Pt(a,pt):
+def move_apPt(a,pt):
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
     edit.startOperation()
@@ -115,4 +115,4 @@ def MOVE_A2Pt(a,pt):
     
 for sp in oid_sp_pt_tlm:
     pt=oid_sp_pt_tlm[sp]
-    MOVE_A2Pt(sp,pt)
+    move_a2pt(sp,pt)
