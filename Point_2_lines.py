@@ -11,11 +11,4 @@ for row in cursor:
     
 #make a list of first point for lines
 #transformers
-pt_0=[]
-pt0_phase=[]
-for i in TLM_list:
-    where="tlm='{}'".format(str(i))
-    cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["SHAPE@","PHASE"],where)
-    for row in cursor:
-        pt_2.append(row[0])
-        pt2_phase.append(row[1])
+
