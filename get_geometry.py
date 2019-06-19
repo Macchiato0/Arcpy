@@ -10,7 +10,11 @@ def get_XY_degree(pt):
     lon=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.X
     coor=(lat,lon)
     return coor
-
+"""
+code has same function for field calculator
+arcpy.PointGeometry(!Shape!.firstPoint,!Shape!.spatialReference).projectAs(arcpy.SpatialReference(4269)).firstPoint.Y
+arcpy.PointGeometry(!Shape!.firstPoint,!Shape!.spatialReference).projectAs(arcpy.SpatialReference(4269)).firstPoint.X
+"""
 #decorator to get XY in decimal degree
 def get_XY(func):
     def wrapper():
