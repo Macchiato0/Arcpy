@@ -160,7 +160,7 @@ for i in device_2:
 
 
 
-
+"""
 test1 
     DATEMODIFIED not null
 
@@ -172,9 +172,9 @@ test1
 test2
     if address null
     add address
-
-find OH lines:
-find UN lines
+search OH lines:
+search UN lines
+""""
 
 cursor=arcpy.da.SearchCursor('Service Point selection',["OID@","DATEMODIFIED","DEVICELOCATION","SHAPE@","FEEDERID","DATECREATED"])
 rows=[i for i in cursor]
