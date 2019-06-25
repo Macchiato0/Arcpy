@@ -8,8 +8,8 @@ rows=[i for i in cursor]
 #tlm as keys of a dictionary
 tlm_list={str(i[1]) for i in rows}
 
-"""
-test the duplicate device location
+
+#test the duplicate device location
 dev_l=[i[2] for i in rows]
 
 make sure they are all duplicate
@@ -69,7 +69,7 @@ for i in (i for i in del_list):
         else:
             continue
 
-"""
+
 #create a dictionary tlm:[(oid,dl,pointgeom),(oid,dl,pointgeom)]
 dict_pt = {x: [(i[0],i[2],i[3],str(i[4])) for i in rows if str(i[1])==x] for x in tlm_list}
 
@@ -106,9 +106,7 @@ for i in del_tlm:
 
 
 
-"""
 
-"""
 r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.SecOHElectricLineSegment'
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
 sp_line=[]
@@ -163,7 +161,6 @@ for i in device_2:
 
 
 
-"""
 test1 
     DATEMODIFIED not null
 
