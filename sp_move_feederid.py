@@ -62,7 +62,7 @@ for i in tlm_list:
     t_p="'"+str(i)+"'"+","+t_p
 
 print t_p
-
+print len(set(num_tlm))
 
 # select the t_p from r"Customers & Transformers\Secondary Transformers"
 # len(tlm_list)
@@ -71,7 +71,7 @@ cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",
 tlm_s=[]
 for i in cursor:
     tlm_s.append(i[0])
-set(tlm_list)-set(tlm_s)
+print set(tlm_list)-set(tlm_s)
 
 # if there are duplicate tlm
 
@@ -102,7 +102,7 @@ oid_sp_pt_tlm=dict(zip(oid,coor))
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
 
 #function to move a sp based on oid to an pt object
-def move_apPt(a,pt):
+def move_a2pt(a,pt):
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
     edit.startOperation()
