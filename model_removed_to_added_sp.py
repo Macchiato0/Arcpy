@@ -89,7 +89,7 @@ print len(del_add)
 #make a dictionary of removed sp id and added pt geomerty
 
 remove_obj_added=dict(zip(remove_obj,match_added_pt))
-
+workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
 
 
 def move_a2pt(a,pt):
