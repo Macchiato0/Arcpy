@@ -26,7 +26,7 @@ for i in set(TLM_list):
     tlm="'{}',".format(i)
     p=p+tlm
 print p 
-prin len(set(TLM_list))
+print len(set(TLM_list))
 
 
 #collect tlm points as the first point of a line
