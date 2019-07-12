@@ -20,6 +20,4 @@ def find_16section(pt):
 
 #find sections for every point in the point lists
 
-for i in range(len(shp_tm)):
-    sec=find_16section(shp_tm[i])
-    tlm_tm.append(sec)
+newlist=map(lambda pt:find_section(pt),shp_tm)
