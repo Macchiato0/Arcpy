@@ -16,7 +16,8 @@ def find_16section(pt):
     for row in cursor:
         if row[1].contains(pt):
             return row[0]
-
+    arcpy.ClearWorkspaceCache_management()
+    arcpy.Delete_management("in_memory")
 
 #find sections for every point in the point lists
 
