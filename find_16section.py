@@ -26,9 +26,9 @@ newlist=map(lambda pt:find_section(pt),shp_tm)
 #find all the tlm of a section
 
 def find_removed(oid):
-    position=oid_index(oid) 
+    position=oid_tm.index(oid) 
     section=str(newlist[position])
     where="TLM LIKE '{}%'".format(section)
-    cursor=arcpy.da.SearchCursor(r'Customers & Transformers\Secondary Transformers',["TLM","CONSTRUCTIONSTATUS","FEEDERID"],where)
+    cursor=arcpy.da.SearchCursor(r'Customers & Transformers\Secondary Transformers',["TLM","CONSTRUCTIONSTATUS"],where)
     list_tlm=[row for row in cursor]
     return list_tlm
