@@ -116,3 +116,9 @@ def move_a2pt(a,pt):
 for sp in oid_sp_pt_tlm:
     pt=oid_sp_pt_tlm[sp]
     move_a2pt(sp,pt)
+    
+    
+if __name__ == '__main__':
+    print 'run main'
+else:
+    print 'package initializing'
