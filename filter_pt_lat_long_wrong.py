@@ -1,4 +1,6 @@
 #DRG create 695785 location on gis, this script calculate the distance between GPS coordinate and map coordinates
+#find the points with coordinates different with their input gps XY provided by field survey
+
 import math
 
 #data colection
