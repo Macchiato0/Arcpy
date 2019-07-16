@@ -57,6 +57,8 @@ class Svp(Pt):
 #pt need to be a point geometry,i.e. tranformer["SHAPE@"]  
 
 
+    def find_nearest_added_SP(self, *args)
+#find the nearest service point    
 
 if __name__ == '__main__':
     print 'package initializing'
