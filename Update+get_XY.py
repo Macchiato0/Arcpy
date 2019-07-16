@@ -1,6 +1,9 @@
+#This script update the service points without x and y
+#two ways to update the XY fields : field calculation and arcpy script updates
+'''
 4497 sp without XY processed by DRG
-
- geo reference system 4269
+geo reference system 4269
+''''
 
 where clause:"DRG is not null and LATITUDE is null and LONGITUDE is null"
 
