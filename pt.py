@@ -42,7 +42,21 @@ class Svp(Pt):
         for row in cursor:
             tlm=row[0]
          return tlm
-    
-    def move_sp
+# find the specified transformer   
+
+    def move_2pt(self,pt):
+        edit = arcpy.da.Editor(self.workspace)
+        edit.startEditing(False, True)
+        edit.startOperation()
+        where="OBJECTID={}".format(self.oid)
+        cursor=arcpy.da.UpdateCursor(get_sde(self),["SHAPE@"],where)
+        for row in cursor:
+            row[0]=pt
+            cursor.updateRow(row)
+        edit.stopOperation()        
+#pt need to be a point geometry,i.e. tranformer["SHAPE@"]  
+
+
+
 if __name__ == '__main__':
     print 'package initializing'
