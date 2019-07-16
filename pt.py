@@ -1,8 +1,9 @@
 # _*_ coding: utf-8 _*_
 
-"""
+'''
 Pt.py by Yi Fan
-"""
+'''
+
 class Pt:
 #A parent class of all point features classes on map: TLM, Service point, (other features could be added into child class
     feature_class={
@@ -11,7 +12,7 @@ class Pt:
     }
     def __init__(self, oid, f_class,feederid):
         self.oid = oid
-        self.f_class = Pt.feature_class[f_class]
+        self.f_class = self.feature_class[f_class]
         self.feederid = feederid
     workspace = 'E:\\Data\\yfan\\Connection to dgsep011.sde'
     dataset='\\ELECDIST.ElectricDist\\'
@@ -20,7 +21,8 @@ class Pt:
 #f_class:1 or 2
 #oid: integer, objectid of the feature
     def get_sde(self):
-        data_source=Pt.workspace+Pt.dataset+Pt.f_class
+        data_source=self.workspace+self.dataset+self.f_class
+        return data_source
 
 #create the directory of sde data source
 
@@ -36,7 +38,11 @@ class Svp(Pt):
 #child class for methodes of service points
 
     def find_TLM(self):
-        
-
+        cursor=arcpy.da.SearchCursor(self.get_sde(),["TLM"],"OBJECTID={}".format(self.oid))
+        for row in cursor:
+            tlm=row[0]
+         return tlm
+    
+    def move_sp
 if __name__ == '__main__':
     print 'package initializing'
