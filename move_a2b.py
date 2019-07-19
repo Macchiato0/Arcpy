@@ -16,3 +16,6 @@ def move_a2b(a,b):
     edit.stopOperation()
     #edit.stopEditing(True)
     #?? really not sure why I cannot stop editing here, otherwise there will be a warning.
+    
+if __name__ == "__main__":
+    print 'this one move points based on database ID.'
