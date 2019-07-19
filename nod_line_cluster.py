@@ -1,3 +1,5 @@
+# _*_ coding: utf-8 _*_ 
+# By Yi Fan
 '''
 goal: draw clusters based on nodes 
 '''
