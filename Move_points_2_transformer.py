@@ -21,4 +21,4 @@ def move_sp(it):
 
 
 if __name__=="__main__":
-   print 'this is old version.'
+   print 'this is old version. Move a point based on its TLM number'
