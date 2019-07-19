@@ -20,11 +20,5 @@ def move_sp(it):
     return it
 
 
-
-cursor=arcpy.da.SearchCursor(r"Service Point selection",["OID@"])
-obj=[]
-for i in cursor:
-    obj.append(i[0])
-    
-for i in obj:
-   move_sp(i) 
+if __name__=="__main__":
+   print 'this is old version.'
