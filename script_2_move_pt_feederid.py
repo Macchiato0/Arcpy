@@ -119,6 +119,6 @@ for sp in oid_sp_pt_tlm:
     
     
 if __name__ == '__main__':
-    print 'run main'
+    print 'script_2_move_pt_feederid.py'
 else:
-    print 'package initializing'
+    print 'not import'
