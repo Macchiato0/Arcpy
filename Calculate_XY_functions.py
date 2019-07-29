@@ -11,7 +11,7 @@ where clause:"DRG is not null and LATITUDE is null and LONGITUDE is null"
 def get_XY_degree(pt):
     lat=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.Y
     lon=pt.projectAs(arcpy.SpatialReference(4269)).firstPoint.X
-    coor=(lat,lon)
+    coor=(lon,lat)
     return coor
 """
 code has same function for field calculator
