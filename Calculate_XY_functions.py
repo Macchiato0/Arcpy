@@ -57,7 +57,7 @@ def update_geometry():
         
 
   #calculate the pt coordinates in meters  
-  def get_XY_meter(pt):
+def get_XY_meter(pt):
     lat=pt.projectAs(arcpy.SpatialReference(2008)).firstPoint.Y
     lon=pt.projectAs(arcpy.SpatialReference(2008)).firstPoint.X
     coor=(lon,lat)
