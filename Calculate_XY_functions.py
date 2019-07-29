@@ -57,13 +57,16 @@ def update_geometry():
         
 
   #calculate the pt coordinates in meters  
+'''
+1. add field X,Y
+2.calculate geometry
+'''
+#georef code 102123
 def get_XY_meter(pt):
-    lat=pt.projectAs(arcpy.SpatialReference(2008)).firstPoint.Y
-    lon=pt.projectAs(arcpy.SpatialReference(2008)).firstPoint.X
+    lat=pt.projectAs(arcpy.SpatialReference(102123)).firstPoint.Y
+    lon=pt.projectAs(arcpy.SpatialReference(102123)).firstPoint.X
     coor=(lon,lat)
     return coor      
-      
-      
     
     
   
