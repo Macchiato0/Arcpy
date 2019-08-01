@@ -45,7 +45,7 @@ for i in remove_pt:
         dist=i.distanceTo(j)
         meters.append(dist)
     added_i=meters.index(min(meters))
-    if min(meters)<60:   
+    if min(meters)<30:   
         match_pt=added_pt[added_i]
         match_id=added_obj[added_i]
         match_added_pt.append(match_pt)
