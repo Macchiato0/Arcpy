@@ -28,6 +28,11 @@ for i in set(TLM_list):
 print p 
 print len(set(TLM_list))
 
+#if not consistant
+cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["TLM"])
+tlm2=[str(i[0]) for i in cursor]
+
+set(tlm2)
 
 #collect tlm points as the first point of a line
 pt_0=[]
