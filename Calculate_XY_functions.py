@@ -58,6 +58,7 @@ def update_geometry():
 
   #calculate the pt coordinates in meters  
 '''
+X.Y. in WGS 1984 geographic coordinate system (in degree)
 1. add field X,Y
 2.calculate geometry
 '''
