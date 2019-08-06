@@ -48,6 +48,8 @@ cursor.insertRow([pg1])
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\ELECDIST_Dissolve',["*"])
 for i in cursor:
     print i
-    
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\Substation_Boundary',["*"])
+for i in cursor:
+    print i    
 arcpy.DeleteRows_management('Substation_Boundary')
 '''
