@@ -7,13 +7,14 @@ import itertools
 
 feederid=['129802','051101','051102','060203','060204','140701','140702','026501','026502','077201','077202']
 
-
-for i in feederid: 
+#delete the lable of tap points to close to each other
+def get_close_tap(feederid): 
     where="feederid='{}'".format(i)
     cursor=arcpy.da.SearchCursor("Tap Dots, T-points, & Wire Changes selection",["OID@","SHAPE@","LCP"],where)
     rows=[q for q in cursor]
     rows2=[]
     #find the taps with a label
+    tap=[]
     for j in rows:     
         where="FEATUREID={}".format(j[0])
         cursor1=arcpy.da.SearchCursor(r'Misc Network Features\Feature Linked Anno\MiscNetworkFeature_Label_300',["SHAPE@"],where)
@@ -40,8 +41,6 @@ for i in feederid:
             tap.append(x[0])
             tap.append(y[0])
     tapr=list(set(tap))
-    print tapr    
+    return tapr    
    
 '''
-arcpy.MakeQueryTable_management(r'Misc Network Features\Feature Linked Anno\MiscNetworkFeature_Label_300',M300,"USE_KEY_FIELDS", , , where)
-
