@@ -34,8 +34,8 @@ for i in subid:
         sub_id=rows[0][3]        
         cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Substation_Boundary',fields_2) 
         cursor.insertRow([sub_poly,sub_name,w_head,sub_id])
-    else:
-        print i
+    #else:
+        #print i
 '''    
 cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\ELECDIST_Dissolve',["SHAPE@"]) 
 cursor.insertRow([pg1])
@@ -51,8 +51,8 @@ cursor.insertRow([pg1])
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\ELECDIST_Dissolve',["*"])
 for i in cursor:
     print i
-cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\Substation_Boundary',["*"])
+cursor=arcpy.da.SearchCursor('Substation Boundary',["*"])
 for i in cursor:
     print i    
-arcpy.DeleteRows_management('Substation_Boundary')
+arcpy.DeleteRows_management('Substation Boundary')
 '''
