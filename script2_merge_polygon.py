@@ -34,7 +34,7 @@ for i in subid:
         sub_id=rows[0][3]        
         cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Substation_Boundary',fields_2) 
         cursor.insertRow([sub_poly,sub_name,w_head,sub_id])
-    #else:
+    #else: #show the subs without a boundary
         #print i
 '''    
 test the output
