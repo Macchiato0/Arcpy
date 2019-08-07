@@ -14,7 +14,7 @@ from functools import reduce
 
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist_GO\ELECDIST.Boundary_Substation_GO',["SUBSTATIONID"])
 
-subid=[str(i[0]) for i in cursor]
+subid=list(set([str(i[0]) for i in cursor]))
 
 #extract polygons belongs to every substations
 #["SUBSTATION","HDQ","SHAPE@"]
@@ -26,13 +26,16 @@ for i in subid:
     where="SUBSTATIONID={}".format(i)
     cursor=arcpy.da.SearchCursor(dataset,fields,where)
     rows=[i for i in cursor]
-    sub_name=rows[0][1]
-    w_head=rows[0][2]
-    sub_id=rows[0][3]
     plgongs=[i[0] for i in rows]
-    sub_poly=reduce(lambda a,b : a.union(b),plgongs)
-    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Substation_Boundary',fields_2) 
-    cursor.insertRow([pg1,sub_name,w_head,sub_id])
+    if len(plgongs)>0: 
+        sub_poly=reduce(lambda a,b : a.union(b),plgongs)
+        sub_name=rows[0][1]
+        w_head=rows[0][2]
+        sub_id=rows[0][3]        
+        cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Substation_Boundary',fields_2) 
+        cursor.insertRow([sub_poly,sub_name,w_head,sub_id])
+    else:
+        print i
 '''    
 cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\ELECDIST_Dissolve',["SHAPE@"]) 
 cursor.insertRow([pg1])
