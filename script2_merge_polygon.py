@@ -37,6 +37,7 @@ for i in subid:
     #else:
         #print i
 '''    
+test the output
 cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\ELECDIST_Dissolve',["SHAPE@"]) 
 cursor.insertRow([pg1])
 
