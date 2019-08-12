@@ -18,22 +18,24 @@
 
 import arcpy
 
-select_oid = arcpy.da.SearchCursor(r"Customers & Transformers\Service Point", ["OID@","TLM"])
+#select_oid = arcpy.da.SearchCursor(r"Customers & Transformers\Service Point", ["OID@","TLM"])
 
-select_oid = arcpy.da.SearchCursor("Service Point selection", ["OID@","TLM"])
+select_oid = arcpy.da.SearchCursor("Service Point selection", ["OID@","TLM","SHAPE@"])
 
 oid = [] #list of device location
 num_tlm=[]#list of tlm, tlm should be in str because tlm may start at 0
-
+sp_pt=[]
 # create a list of device location for every sp
 for row1 in select_oid:
     x1 = row1[0]
     x2 = row1[1]
+    x3=row1[2]
     oid.append(x1)
     num_tlm.append(x2)
-
+    sp_pt.append(x3)
+    
 # if true
-print len(oid),len(num_tlm)
+print len(oid),len(num_tlm),len(sp_pt)
 
 # create a list of tlm coordinate for every device location 
 
@@ -67,6 +69,7 @@ print len(set(num_tlm))
 # select the t_p from r"Customers & Transformers\Secondary Transformers"
 # len(tlm_list)
 
+
 cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["TLM"])
 tlm_s=[]
 for i in cursor:
@@ -96,6 +99,14 @@ for sp in oid:
     except:
         pass
 """ 
+#test the distance between paired servive point and transformer. Service points distanceTo tlm within 150 meters do not require move
+
+sp_tlm=list(zip(sp_pt, coor,oid))
+result=filter(lambda x: x[0].distanceTo(x[1])>200, sp_tlm)
+
+#find the oid of sp distance to transformer more than 150
+[i[2] for i in result]
+
 #put oid and point of tlm in a dictionary
 oid_sp_pt_tlm=dict(zip(oid,coor))
 
