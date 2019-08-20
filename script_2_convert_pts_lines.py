@@ -6,9 +6,9 @@ t_pt2=arcpy.Point(594317.222,543784.535)
 t_pl=arcpy.Polyline(arcpy.Array([t_pt1,t_pt2]))
 """
 
-#first point
-#make a list of last point for lines
-#service points
+# first point
+# make a list of last point for lines
+# service points
 cursor=arcpy.da.SearchCursor("Service Point selection",["OID@","SHAPE@","TLM"])
 pt_list=[]
 oid_list=[]
@@ -20,7 +20,7 @@ for row in cursor:
 
 
 
-#check if all tlm are avaiable
+# check if all tlm are avaiable
 p=''
 for i in set(TLM_list):
     tlm="'{}',".format(i)
@@ -28,13 +28,13 @@ for i in set(TLM_list):
 print p 
 print len(set(TLM_list))
 
-#if not consistant
+# if not consistant
 cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["TLM"])
 tlm2=[str(i[0]) for i in cursor]
 
 set(tlm2)
 
-#collect tlm points as the first point of a line
+# collect tlm points as the first point of a line
 pt_0=[]
 pt0_phase=[]
 for i in TLM_list:
@@ -45,7 +45,7 @@ for i in TLM_list:
         pt0_phase.append(row[1])
 
 
-#zip point 0, point1, and the phase
+# zip point 0, point1, and the phase
 pts_phase=zip(pt_0,pt_list,pt0_phase)
 
 
@@ -57,12 +57,12 @@ for i in pts_phase:
     cursor.insertRow([t_pl,xyz])
 
 
-#test sec_oh
+# test sec_oh
 
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["*"])
 for i in cursor:
     print i
 
-#arcpy.DeleteRows_management('Sec_OH')
+# arcpy.DeleteRows_management('Sec_OH')
 
 
