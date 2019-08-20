@@ -1,4 +1,5 @@
 #move the disconnected service points to the correct tlm
+'''
 def move_sp(it):
     select_id='OBJECTID='+str(it)
     select_tlm = arcpy.da.SearchCursor(r"Customers & Transformers\Service Point", ["TLM"], select_id)
@@ -22,3 +23,27 @@ def move_sp(it):
 
 if __name__=="__main__":
    print 'this is old version. Move a point based on its TLM number'
+'''
+def move_sp(a):
+    workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+    edit = arcpy.da.Editor(workspace)
+    edit.startEditing(False, True)
+    edit.startOperation()
+    
+    where="OBJECTID={}".format(a)
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["TLM"],where)
+    for row in cursor:
+        tlm=str(row[0])
+        
+    where="TLM='{}'".format(tlm)
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.Transformer',["SHAPE@"],where)
+    for row in cursor:
+        pt=row[0]
+        
+    where="OBJECTID={}".format(a)
+    cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
+    for row in cursor:
+        row[0]=pt
+        cursor.updateRow(row)
+        
+    edit.stopOperation()
