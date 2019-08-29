@@ -37,24 +37,31 @@ set(tlm2)
 # collect tlm points as the first point of a line
 pt_0=[]
 pt0_phase=[]
+pt0_SUBSTATIONID=[]
+pt0_CIRCUITID=[]
 for i in TLM_list:
     where="tlm='{}'".format(str(i))
-    cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["SHAPE@","PHASEDESIGNATION"],where)
+    cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Secondary Transformers",["SHAPE@","PHASEDESIGNATION","SUBSTATIONID","CIRCUITID"],where)
     for row in cursor:
         pt_0.append(row[0])
         pt0_phase.append(row[1])
+        pt0_SUBSTATIONID.append(row[2])
+        pt0_CIRCUITID.append(row[3])
 
 
 # zip point 0, point1, and the phase
-pts_phase=zip(pt_0,pt_list,pt0_phase)
+pts_phase=zip(pt_0,pt_list,pt0_phase,pt0_SUBSTATIONID,pt0_CIRCUITID)
 
 
 for i in pts_phase:
     t_pt1,t_pt2=i[0].firstPoint,i[1].firstPoint
     xyz=i[2]
-    t_pl=arcpy.Polyline(arcpy.Array([t_pt1,t_pt2]))     
-    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["SHAPE@","PHASEDESIGNATION"]) 
-    cursor.insertRow([t_pl,xyz])
+    subid=i[3]
+    cirid=i[4]
+    t_pl=arcpy.Polyline(arcpy.Array([t_pt1,t_pt2]))  
+    line_ft=t_pl.length * 3.2808399
+    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["SHAPE@","PHASEDESIGNATION","SUBSTATIONID","CIRCUITID","MEASUREDLENGTH","LENGTHSOURCE","NETWORKLEVEL"]) 
+    cursor.insertRow([t_pl,xyz,subid,cirid,line_ft,'USER',200])
 
 
 # test sec_oh
