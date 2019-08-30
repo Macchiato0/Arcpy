@@ -67,8 +67,14 @@ for i in pts_phase:
 # test sec_oh
 
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["*"])
+
+n=0
+
 for i in cursor:
+    n=n+1
     print i
+
+print n
 
 # arcpy.DeleteRows_management('Sec_OH')
 
@@ -123,6 +129,8 @@ n=0
 for i in cursor:
     n=n+1
     print i
+    
+print n
     
     
     
