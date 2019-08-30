@@ -60,8 +60,8 @@ for i in pts_phase:
     cirid=i[4]
     t_pl=arcpy.Polyline(arcpy.Array([t_pt1,t_pt2]))  
     line_ft=t_pl.length * 3.2808399
-    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["SHAPE@","PHASEDESIGNATION","SUBSTATIONID","CIRCUITID","MEASUREDLENGTH","LENGTHSOURCE","NETWORKLEVEL"]) 
-    cursor.insertRow([t_pl,xyz,subid,cirid,line_ft,'USER',200])
+    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["SHAPE@","PHASEDESIGNATION","SUBSTATIONID","CIRCUITID","MEASUREDLENGTH","LENGTHSOURCE","NETWORKLEVEL","SERVICEINDICATOR"]) 
+    cursor.insertRow([t_pl,xyz,subid,cirid,line_ft,'USER',200,'Yes'])
 
 
 # test sec_oh
@@ -113,8 +113,8 @@ for i in pts_phase:
     cirid=i[4]
     t_pl=arcpy.Polyline(arcpy.Array([t_pt1,t_pt2]))     
     line_ft=t_pl.length * 3.2808399
-    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["SHAPE@","PHASEDESIGNATION","SUBSTATIONID","CIRCUITID","MEASUREDLENGTH","LENGTHSOURCE","NETWORKLEVEL"]) 
-    cursor.insertRow([t_pl,xyz,subid,cirid,line_ft,'USER',200])
+    cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\Sec_OH',["SHAPE@","PHASEDESIGNATION","SUBSTATIONID","CIRCUITID","MEASUREDLENGTH","LENGTHSOURCE","NETWORKLEVEL","SERVICEINDICATOR"]) 
+    cursor.insertRow([t_pl,xyz,subid,cirid,line_ft,'USER',200,'Yes'])
     
 # test sec_oh
 
