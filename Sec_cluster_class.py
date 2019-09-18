@@ -13,7 +13,8 @@ class sec_cluster:
         self.tlm_shp={k:(v1,v2) for (k,v1,v2) in cursor}
         cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["OID@","SHAPE@","DEVICELOCATION"],"feederid='{}'".format(self.fid))
         self.sp_shp={k:(v1,v2) for (k,v1,v2) in cursor}
-                
+        
+    '''            
     def _search_line(self,pt): #inner function for class method based on deletion searching
         result={}
         for k in self.line_shp:
@@ -22,12 +23,22 @@ class sec_cluster:
         for key in result:
             del self.sec_line[key]
         return result
+    '''
     
 # recursive method:
 # search 1[lines] linked to a point --> search 2[lines] linked to 1[lines]......
 # return when no line found linked to n[lines]
-    def _find_line(self,**kwargs): #**kwargs is a dict
-        sub_cluster={}
+
+    def _find_line(self): #find the linked lines
+        sub_cluster=dict([self.line_shp.popitem()])
+        sub_iter,line_iter=sub_cluster.iteritems(),line_iter.iteritems()
+        #sub_iter,sup_iter=sub_cluster.itervalues(),**kwargs.itervalues()
+        while (len(self.line_shp)<1):
+        l1,l2=sub_iter.next(),line_iter.next()
+        sub_cluster=[]
+        if l1[1].distanceTo(l2[1])==0
+            sub_cluster[l2[0]]=self.line_shp.pop(l2[0])
+         
         
         '''
         geo2={}
