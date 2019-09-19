@@ -2,7 +2,7 @@
 
 import arcpy
 class sec_cluster:
-    __slots__ = 'line_shp','fid','tlm_shp','sp_shp'
+    __slots__ : 'line_shp','fid','tlm_shp','sp_shp','cluster','sub_cluster','cluster2'
     def __init__(self,fid): #name type is string, input is feederid
         self.fid=fid
 
@@ -13,33 +13,31 @@ class sec_cluster:
         self.tlm_shp={k:(v1,v2) for (k,v1,v2) in cursor}
         cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["OID@","SHAPE@","DEVICELOCATION"],"feederid='{}'".format(self.fid))
         self.sp_shp={k:(v1,v2) for (k,v1,v2) in cursor}
-        
-    '''            
-    def _search_line(self,pt): #inner function for class method based on deletion searching
-        result={}
-        for k in self.line_shp:
-            if self.line_shp[k].distanceTo(pt)==0:
-                result[k]=self.sec_line[k]
-        for key in result:
-            del self.sec_line[key]
-        return result
-    '''
+        self.cluster=[]        
+        self.sub_cluster=dict([self.line_shp.popitem()])
+        self.cluster2=self.sub_cluster #temp store of clustered lines
     
 # recursive method:
-# search 1[lines] linked to a point --> search 2[lines] linked to 1[lines]......
-# return when no line found linked to n[lines]
+# search lines linked to [line1] 
 
-    def _find_line(self): #find the linked lines
-        sub_cluster=dict([self.line_shp.popitem()])
-        sub_iter,line_iter=sub_cluster.iteritems(),line_iter.iteritems()
-        #sub_iter,sup_iter=sub_cluster.itervalues(),**kwargs.itervalues()
-        while (len(self.line_shp)<1):
-        l1,l2=sub_iter.next(),line_iter.next()
-        sub_cluster=[]
-        if l1[1].distanceTo(l2[1])==0
-            sub_cluster[l2[0]]=self.line_shp.pop(l2[0])
-         
-        
+    def _find_line(self,lines): #find the linked lines, lines=self.sub_cluster
+        line_cont={}
+        for k1 in lines:
+            for k2 in self.sub_cluster:
+                if lines[k1].distanceTo(self.sub_cluster[k2]):
+                    line_cont[k1]= lines.pop(k1)
+        if len(line_cont)>0:
+            self.sub_cluster2.update(line_cont)
+            self.sub_cluster=line_cont
+            self._find_line(self.sub_cluster)
+        elif len(line_cont)==0 and len(self.line_shp)>0:
+            self.cluster.append(self.cluster2)
+            self.sub_cluster=dict([self.line_shp.popitem()])
+            self.cluster2=self.sub_cluster
+            self._find_line(self.sub_cluster)
+        else:
+            break
+            
         '''
         geo2={}
         if type(args[0]) is dict:
