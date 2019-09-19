@@ -13,7 +13,7 @@ class sec_cluster:
         self.cluster=[]        
         self.cluster1=dict([self.line_shp.popitem()])
         self.cluster2=self.cluster1 #temp store of clustered lines    
-        self.line_shp_temp=self.line_shp
+        self.line_shp_temp=copy.deepcopy(self.line_shp)
         
 # recursive method:
 # search lines linked to [line1] 
@@ -23,7 +23,7 @@ class sec_cluster:
             for k2 in lines:
                 if lines[k2].distanceTo(self.line_shp_temp[k1])==0:
                     line_cont[k1]=self.line_shp.pop(k1)
-                    self.line_shp_temp=self.line_shp
+                    self.line_shp_temp=copy.deepcopy(self.line_shp)
         if len(line_cont)>0:
             self.cluster2.update(line_cont)
             self.cluster1={}
