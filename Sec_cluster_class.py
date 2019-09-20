@@ -17,24 +17,26 @@ class sec_cluster:
         
 # recursive method:
 # search lines linked to [line1] 
-    def find_line(self,lines): #find the linked lines, lines=a.sub_cluster
+    @classmethod
+    def find_line(self): #find the linked lines, lines=a.sub_cluster1
         line_cont={}
-        for k1 in self.line_shp:
-            for k2 in lines:
-                if lines[k2].distanceTo(self.line_shp_temp[k1])==0:
+        for k1 in self.line_shp_temp:
+            for k2 in self.cluster1:
+                if self.cluster1[k2].distanceTo(self.line_shp[k1])==0:
                     line_cont[k1]=self.line_shp.pop(k1)
                     self.line_shp_temp=copy.deepcopy(self.line_shp)
         if len(line_cont)>0:
             self.cluster2.update(line_cont)
             self.cluster1={}
             self.cluster1.update(line_cont)
-            self.find_line(self.cluster1)
+            self.find_line(self)
         elif len(line_cont)==0 and len(self.line_shp)>0:
             self.cluster.append(self.cluster2)
             self.cluster1=dict([self.line_shp.popitem()])
+            self.line_shp_temp=copy.deepcopy(self.line_shp)
             self.cluster2={}
             self.cluster2.update(self.cluster1)
-            self.find_line(self.cluster1)
+            self.find_line(self)
         else:
             return self.cluster
             
