@@ -12,7 +12,7 @@ cluster1=[line_shp[0]]
 cluster2=[]
 cluster3=[]
 
-  
+#form oh sec network clusters  (recursive method)
 
 def find_line(lists):#lists=cluster1
     global cluster
@@ -47,8 +47,11 @@ def find_line(lists):#lists=cluster1
 
 
 
+#add sec underground to sec overhead network clusters 
+fid='011003'
+cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@"],"feederid='{}'".format(fid))
 
-
+line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))]] for i in cursor]
 
     
 
