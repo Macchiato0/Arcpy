@@ -9,7 +9,8 @@ line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastP
 
 line_all=[]
 for i in line_shp:
-    line_all.append([i,0])
+    i.append(0)
+    line_all.append(i)
 #0 is oh
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@"],"feederid='{}'".format(fid))
 
@@ -17,7 +18,8 @@ line_shp_1=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].las
 
 #1 is underground 
 for i in line_shp_1:
-    line_all.append([i,1])
+    i.append(1)
+    line_all.append(i)
 
 
 cluster=[]        
@@ -26,7 +28,7 @@ cluster1=[line_all[0]]
 cluster2=[]
 cluster3=[]
 
-
+#include all oh and un sec line to the list
 def find_line(lists):#lists=cluster1
     global cluster
     global cluster2
@@ -34,9 +36,9 @@ def find_line(lists):#lists=cluster1
     global cluster3
     global line_shp
     for l in lists:
-        if l in line_shp:
-            line_shp.remove(l)
-    for i in line_shp:
+        if l in line_all:
+            line_all.remove(l)
+    for i in line_all:
         for j in lists:
             if [a for a in i[1] if a in j[1]]:  
                 if i not in lists:
@@ -49,10 +51,10 @@ def find_line(lists):#lists=cluster1
         cluster2=[]
         #print cluster1
         find_line(cluster3)
-    elif len(line_shp)>0:
+    elif len(line_all)>0:
         cluster.append(cluster1)
         cluster3=[]
-        cluster1=[line_shp[0]]
+        cluster1=[line_all[0]]
         find_line(cluster1)
     else:
         cluster.append(cluster1)
@@ -62,7 +64,7 @@ find_line(cluster1)
 
 
 
-
+'''the following is the note 
 #form oh sec network clusters  (recursive method)
 
 def find_line(lists):#lists=cluster1
@@ -98,7 +100,7 @@ def find_line(lists):#lists=cluster1
 
 find_line(cluster1)
 
-
+'''
 #find the tlm for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.Transformer',["SHAPE@","TLM"],"feederid='{}'".format(fid))
 tlm_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
@@ -110,6 +112,7 @@ def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the el
             n=n+1
     if n>0:
         row=[oh_clust,tlm]
+        tlm_shp.remove(tlm)
         cluster_tlm.append(row)
         
 for i in cluster:
@@ -140,7 +143,7 @@ for i in cluster:
 
 
 
-
+''' the following is the note
 #form sec underground to sec overhead network clusters,same algorithem as above 
 #the following is the algorithm for underground
 fid='011003'
