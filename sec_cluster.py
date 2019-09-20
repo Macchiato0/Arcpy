@@ -14,10 +14,10 @@ for i in line_shp:
 #0 is oh
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@"],"feederid='{}'".format(fid))
 
-line_shp_1=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))]] for i in cursor]
+line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))]] for i in cursor]
 
 #1 is underground 
-for i in line_shp_1:
+for i in line_shp:
     i.append(1)
     line_all.append(i)
 
@@ -115,11 +115,25 @@ def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the el
         tlm_shp.remove(tlm)
         cluster_tlm.append(row)
         
-for i in cluster:
-    for j in tlm_shp:
+
+for j in tlm_shp:
+    for i in cluster:
         line_oh_tlm(i,j)
+        
+#find the sp for each cluster
+cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["SHAPE@","DEVICELOCATION"],"feederid='{}'".format(fid))
+sp_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
 
-
+def line_oh_sp(tlm_clust,sp):#tlm_clust is the element of cluster_tlm(clust,tlm), sp is the element of sp_shp
+    for i in tlm_clust[0]:
+        if [p for p in i[1] if l==sp[1]]:
+            i.append(sp[0])
+            
+    
+ #i[0] is line cluster, i[1] is tlm
+for s in sp_shp:
+    for clt in cluster_tlm:
+        line_oh_sp(clt,s)
 
 
 
