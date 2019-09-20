@@ -47,7 +47,7 @@ def find_line(lists):#lists=cluster1
 
 find_line(cluster1)
 
-#add sec underground to sec overhead network clusters 
+#form sec underground to sec overhead network clusters,same algorithem as above 
 fid='011003'
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@"],"feederid='{}'".format(fid))
 
@@ -91,7 +91,21 @@ def find_line(lists):#lists=un_cluster1
 find_line(un_cluster1)
         
         
-        
+#add under sec network cluster to overhead network cluster        
+def link_cluster(oh,un):#list1 and list2 are sub cluster of lines for each category
+    n=0
+    for oh_l in oh:
+        for un_l in un:
+            if [l for l in oh_l[1] if l in un_l[1]]:#if two line share same point
+                n=n+1
+    if n>0:
+        return [oh,un]
+    else:
+        None
+                
+            
+            
+    
         
         
         
