@@ -136,16 +136,25 @@ for i in cluster:
 #find the sp for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["SHAPE@","DEVICELOCATION"],"feederid='{}'".format(fid))
 sp_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
+#test cluster
+test_cluster=[i for i in cluster]
+test_cluster==cluster
+
+
 
 def line_oh_sp(tlm_clust,sp):#tlm_clust is the element of cluster_tlm(clust,tlm), sp is the element of sp_shp
-    for i in tlm_clust[0]:
-        if [p for p in i[1] if l==sp[1]]:
-            i.append(sp[0])
+    for i in tlm_clust:
+        if [p for p in i[1] if p==sp[1]]:
+            if len(i)==4:
+                i.append(sp[0])
+            else:
+                i.append('None')
+                i.append(sp[0])
             
     
  #i[0] is line cluster, i[1] is tlm
 for s in sp_shp:
-    for clt in cluster_tlm:
+    for clt in test_cluster:
         line_oh_sp(clt,s)
 
 
