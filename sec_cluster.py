@@ -104,16 +104,22 @@ find_line(cluster1)
 #find the tlm for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.Transformer',["SHAPE@","TLM"],"feederid='{}'".format(fid))
 tlm_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
-cluster_tlm=[]
+#cluster_tlm=[]
 def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the element of tlm_shp
     n=0
     for i in oh_clust:
         if [l for l in i[1] if l==tlm[1]]:
             n=n+1
     if n>0:
-        row=[oh_clust,tlm]
-        tlm_shp.remove(tlm)
-        cluster_tlm.append(row)
+        for i in oh_clust:
+            if len(i)==
+            i.append(tlm[0])
+            
+                     
+                     
+                     
+
+#        cluster_tlm.append(row)
         
 
 for j in tlm_shp:
