@@ -112,8 +112,8 @@ def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the el
             n=n+1
     if n>0:
         for i in oh_clust:
-            if len(i)==
-            i.append(tlm[0])
+            if len(i)==3:
+                i.append(tlm[0])
             
                      
                      
@@ -125,6 +125,13 @@ def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the el
 for j in tlm_shp:
     for i in cluster:
         line_oh_tlm(i,j)
+
+        
+# test the cluster without tlm
+for i in cluster:
+    for j in i:
+        if len(j)==3:
+            print j
         
 #find the sp for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["SHAPE@","DEVICELOCATION"],"feederid='{}'".format(fid))
