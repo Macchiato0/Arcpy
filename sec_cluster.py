@@ -2,11 +2,8 @@ import sys
 sys.getrecursionlimit()
 sys.setrecursionlimit(100000)
 
-fid='011003'
+fid='011004'
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecOHElectricLineSegment',["OID@","SHAPE@","WIRETYPE"],"feederid='{}'".format(fid))
-
-
-
 line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))],i[2]] for i in cursor]
 
 line_all=[]
@@ -15,7 +12,6 @@ for i in line_shp:
     line_all.append(i)
 #0 is oh
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@","WIRETYPE"],"feederid='{}'".format(fid))
-
 line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))],i[2]] for i in cursor]
 
 #1 is underground 
@@ -64,12 +60,6 @@ def find_line(lists):#lists=cluster1
 
 find_line(cluster1)
 
-
-
-'''the following is the note 
-
-
-'''
 #find the tlm for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.Transformer',["SHAPE@","TLM"],"feederid='{}'".format(fid))
 tlm_shp=[[str(i[1]),(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
@@ -84,41 +74,25 @@ def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the el
             if len(i)==4:
                 i.append(tlm[0])
             
-                     
-                     
-                     
-
-#        cluster_tlm.append(row)
-        
 
 for j in tlm_shp:
     for i in cluster:
         line_oh_tlm(i,j)
 
-        
-# test the cluster without tlm
-#for i in cluster:
-#    for j in i:
-#        if len(j)==4:
-#            print j
+#add lines without TLM 'None'        
+for i in cluster:
+    for j in i:
+        if len(j)<5:
+            j.append('None')        
         
 #find the sp for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["SHAPE@","DEVICELOCATION"],"feederid='{}'".format(fid))
 sp_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
-#test cluster
-test_cluster=[i for i in cluster]
-test_cluster==cluster
-
-
 
 def line_oh_sp(tlm_clust,sp):#tlm_clust is the element of cluster_tlm(clust,tlm), sp is the element of sp_shp
     for i in tlm_clust:
         if [p for p in i[1] if p==sp[1]]:
-            if len(i)==5:
-                i.append(sp[0])
-            else:
-                i.append('None')
-                i.append(sp[0])
+            i.append(sp[0])
 
             
     
@@ -130,7 +104,7 @@ for s in sp_shp:
 #add 'None' to sec lines without service point
 for i in cluster:
     for j in i:
-        if len(j)<6:
+        if len(j) < 6:
             j.append('None')
 
 #create table of oid,measured length,wire type,oh_un,tlm,device
@@ -142,29 +116,19 @@ def feet(l):#l contains 2 pts
 
 file_name='E:\\Data\\yfan\\tlm_sec\\{}.csv'.format(fid)
 import csv 
-with open('E:\\Data\\yfan\\tlm_sec\\011003.csv', 'wb') as csvfile:
+with open(file_name, 'wb') as csvfile:
     filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
     for i in cluster:#test_cluster=cluster
         for j in i:
             if j[3]==0:
-                row=[j[0],feet(j[1]),j[2],j[4],j[5]]
+                t="'{}'".format(j[4])
+                row=[j[0],feet(j[1]),j[2],t,j[5]]
                 filewriter.writerow(row)
 
 
                 
-for i in cluster:
-    for j in i:
-        row=[j[0],feet(j[1]),j[2],j[4],j[5]]
-        print row
-                
-                
-''' note
-d=[['n','4']['m','6']]
-import csv 
-with open('E:\\Data\\yfan\\tlm_sec\\011003.csv', 'wb') as csvfile:
-    filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    for i in d:#test_cluster=cluster
-        filewriter.writerow(i)
+
+
 
 
 
