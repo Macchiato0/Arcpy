@@ -72,7 +72,7 @@ find_line(cluster1)
 '''
 #find the tlm for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.Transformer',["SHAPE@","TLM"],"feederid='{}'".format(fid))
-tlm_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
+tlm_shp=[[str(i[1]),(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
 #cluster_tlm=[]
 def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the element of tlm_shp
     n=0
@@ -97,10 +97,10 @@ for j in tlm_shp:
 
         
 # test the cluster without tlm
-for i in cluster:
-    for j in i:
-        if len(j)==4:
-            print j
+#for i in cluster:
+#    for j in i:
+#        if len(j)==4:
+#            print j
         
 #find the sp for each cluster
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["SHAPE@","DEVICELOCATION"],"feederid='{}'".format(fid))
@@ -119,14 +119,19 @@ def line_oh_sp(tlm_clust,sp):#tlm_clust is the element of cluster_tlm(clust,tlm)
             else:
                 i.append('None')
                 i.append(sp[0])
+
             
     
  #i[0] is line cluster, i[1] is tlm
 for s in sp_shp:
-    for clt in test_cluster:
+    for clt in cluster:
         line_oh_sp(clt,s)
 
-
+#add 'None' to sec lines without service point
+for i in cluster:
+    for j in i:
+        if len(j)<6:
+            j.append('None')
 
 #create table of oid,measured length,wire type,oh_un,tlm,device
 def feet(l):#l contains 2 pts
@@ -135,17 +140,24 @@ def feet(l):#l contains 2 pts
     return f
 
 
-
+file_name='E:\\Data\\yfan\\tlm_sec\\{}.csv'.format(fid)
 import csv 
 with open('E:\\Data\\yfan\\tlm_sec\\011003.csv', 'wb') as csvfile:
     filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    for i in test_cluster:#test_cluster=cluster
+    for i in cluster:#test_cluster=cluster
         for j in i:
-            if i[3]==0:
-                row=[i[0],feet(i[1]),i[2],i[4],i[5]]
+            if j[3]==0:
+                row=[j[0],feet(j[1]),j[2],j[4],j[5]]
                 filewriter.writerow(row)
 
 
+                
+for i in cluster:
+    for j in i:
+        row=[j[0],feet(j[1]),j[2],j[4],j[5]]
+        print row
+                
+                
 ''' note
 d=[['n','4']['m','6']]
 import csv 
