@@ -3,18 +3,20 @@ sys.getrecursionlimit()
 sys.setrecursionlimit(100000)
 
 fid='011003'
-cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecOHElectricLineSegment',["OID@","SHAPE@"],"feederid='{}'".format(fid))
+cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecOHElectricLineSegment',["OID@","SHAPE@","WIRETYPE"],"feederid='{}'".format(fid))
 
-line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))]] for i in cursor]
+
+
+line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))],i[2]] for i in cursor]
 
 line_all=[]
 for i in line_shp:
     i.append(0)
     line_all.append(i)
 #0 is oh
-cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@"],"feederid='{}'".format(fid))
+cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecUGElectricLineSegment',["OID@","SHAPE@","WIRETYPE"],"feederid='{}'".format(fid))
 
-line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))]] for i in cursor]
+line_shp=[[i[0],[(int(i[1].firstPoint.X),int(i[1].firstPoint.Y)),(int(i[1].lastPoint.X),int(i[1].lastPoint.Y))],i[2]] for i in cursor]
 
 #1 is underground 
 for i in line_shp:
@@ -112,7 +114,7 @@ def line_oh_tlm(oh_clust,tlm):#oh_clust is the element of cluster, tlm is the el
             n=n+1
     if n>0:
         for i in oh_clust:
-            if len(i)==3:
+            if len(i)==4:
                 i.append(tlm[0])
             
                      
