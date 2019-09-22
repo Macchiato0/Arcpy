@@ -134,6 +134,8 @@ def feet(l):#l contains 2 pts
     f=d*3.2808399
     return f
 
+
+
 import csv 
 with open('E:\\Data\\yfan\\tlm_sec\\011003.csv', 'wb') as csvfile:
     filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -144,8 +146,13 @@ with open('E:\\Data\\yfan\\tlm_sec\\011003.csv', 'wb') as csvfile:
                 filewriter.writerow(row)
 
 
-
-
+''' note
+d=[['n','4']['m','6']]
+import csv 
+with open('E:\\Data\\yfan\\tlm_sec\\011003.csv', 'wb') as csvfile:
+    filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    for i in d:#test_cluster=cluster
+        filewriter.writerow(i)
 
 
 
