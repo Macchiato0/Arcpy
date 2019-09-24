@@ -47,3 +47,9 @@ def move_sp(a):
         cursor.updateRow(row)
         
     edit.stopOperation()
+
+    
+cursor=arcpy.da.SearchCursor("Service Point selection",["OID@"])
+for i in cursor:
+    move_sp(i[0])
+        
