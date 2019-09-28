@@ -1,6 +1,6 @@
 import sys
 sys.getrecursionlimit()
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(10000)
 
 fid='011004'
 
@@ -38,6 +38,9 @@ sp_shp=[[i[1],(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
 #create list of transformers
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.Transformer',["SHAPE@","TLM"],"feederid='{}'".format(fid))
 tlm_shp=[[str(i[1]),(int(i[0].firstPoint.X),int(i[0].firstPoint.Y))] for i in cursor]
+
+#create a Quicksort function to sort 3 points list based on their X value (longitude)
+
 
 
 
