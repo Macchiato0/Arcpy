@@ -41,6 +41,8 @@ tlm_shp=[[str(i[1]),(i[0].firstPoint.X,i[0].firstPoint.Y)] for i in cursor]
 
 #search and match pt with sp and tlm @ Py_sort_search_data_structure/binary_search_point.py
 
+#search the rount and topogocial information of lines
+
 
 
 
