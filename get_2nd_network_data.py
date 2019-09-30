@@ -1,6 +1,7 @@
 import sys
-sys.getrecursionlimit()
+
 sys.setrecursionlimit(10000)
+sys.getrecursionlimit()
 
 fid='011004'
 
