@@ -12,24 +12,34 @@ line_shp=[[i[0],[(i[1].firstPoint.X,i[1].firstPoint.Y),(i[1].lastPoint.X,i[1].la
 #[11341189, [(559725, 230913), (559714, 230922)], u'Aluminum', u'4TX']
 #i[1] [(559725, 230913), (559714, 230922)]
 #create points based based on line_shp,oid is unique
+pt=[]    
+for i in line_shp:
+  for j in i[1]:    
+    pt.append(j)
+    
+   
+#make a point list  
 pt_shp=[]
 n=0
-for i in line_shp:
-  for j in i[1]:
+for i in set(pt):
     n+=1
-    row=[n,j]
+    row=[n,i]
     pt_shp.append(row)
-#swap coordinate tuple (x,y) with point id in pt_shp   
-n=0
+    
+#swap coordinate tuple (x,y) with point id in pt_shp,use linear search   
+
 for i in line_shp:
-  for j in range(len(i[1])):
-    n+=1
-    i[1][j]=n
+  for j in pt_shp:
+    if j[1]==i[1][0]:
+      i[1][0]=j[0]
+    if j[1]==i[1][1]:
+      i[1][1]=j[0]
         
 #pt_shp[0]
 #[1, (559725, 230913)]
 #all points data are in the form [id,(x,y)]
 #create list of service point
+
 cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.ServicePoint',["SHAPE@","DEVICELOCATION"],"feederid='{}'".format(fid))
 sp_shp=[[i[1],(i[0].firstPoint.X,i[0].firstPoint.Y)] for i in cursor]
 
