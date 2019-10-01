@@ -7,8 +7,8 @@ sys.getrecursionlimit()
 fid='011004'
 
 #create a list of secondary over head conductor
-cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecOHElectricLineSegment',["OID@","SHAPE@","WIRETYPE","WIRESIZE"],"feederid='{}'".format(fid))
-line_shp=[[i[0],[(i[1].firstPoint.X,i[1].firstPoint.Y),(i[1].lastPoint.X,i[1].lastPoint.Y)],i[2],i[3]] for i in cursor]
+cursor=arcpy.da.SearchCursor('E:\\Data\\yfan\\Connection to dgsep011.sde\\ELECDIST.ElectricDist\\ELECDIST.SecOHElectricLineSegment',["OID@","SHAPE@","WIRETYPE","WIRESIZE","SHAPE.LEN"],"feederid='{}'".format(fid))
+line_shp=[[i[0],[(i[1].firstPoint.X,i[1].firstPoint.Y),(i[1].lastPoint.X,i[1].lastPoint.Y)],i[2],i[3],i[4]/0.3048] for i in cursor]
 
 #line_shp[0]
 #[11341189, [(559725, 230913), (559714, 230922)], u'Aluminum', u'4TX']
