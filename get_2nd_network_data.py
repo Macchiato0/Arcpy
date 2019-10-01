@@ -28,14 +28,7 @@ for i in set(pt):
     row=[n,i]
     pt_shp.append(row)
     
-#swap coordinate tuple (x,y) with point id in pt_shp,use linear search   
 
-for i in line_shp:
-  for j in pt_shp:
-    if j[1]==i[1][0]:
-      i[1][0]=j[0]
-    if j[1]==i[1][1]:
-      i[1][1]=j[0]
         
 #pt_shp[0]
 #[1, (559725, 230913)]
@@ -54,6 +47,26 @@ tlm_shp=[[str(i[1]),(i[0].firstPoint.X,i[0].firstPoint.Y)] for i in cursor]
 #search and match pt with sp and tlm @ Py_sort_search_data_structure/binary_search_point.py
 
 #search the rount and topogocial information of lines
+
+
+#swap coordinate tuple (x,y) with point id in pt_shp,use linear search   
+
+for i in line_shp:
+  for j in pt_shp:
+    if j[1]==i[1][0]:
+      i[1][0]=j[0]
+    if j[1]==i[1][1]:
+      i[1][1]=j[0]
+
+
+
+pt_start=[i for i in pt_shp if 'tlm' in i]
+
+
+for p in pt_start:
+  for l in line_shp:
+    if p[0] == l[1][1]:
+      l[1][1],l[1][0]=l[1][0],l[1][1]
 
 
 
