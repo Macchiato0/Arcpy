@@ -1,6 +1,6 @@
 import sys
 
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(100000)
 sys.getrecursionlimit()
 
 #define fid (feederid) to get 2nd network data of a circuit
