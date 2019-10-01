@@ -58,18 +58,6 @@ tlm_shp=[[str(i[1]),(i[0].firstPoint.X,i[0].firstPoint.Y)] for i in cursor]
 
 
 
-file_name='E:\\Data\\yfan\\tlm_sec\\{}.csv'.format(fid)
-import csv 
-with open(file_name, 'wb') as csvfile:
-    filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    for i in cluster:#test_cluster=cluster
-        for j in i:
-            if j[3]==0:
-                t="'{}'".format(j[4])
-                row=[j[0],feet(j[1]),j[2],t,j[5]]
-                filewriter.writerow(row)
-
-
 
 
 
