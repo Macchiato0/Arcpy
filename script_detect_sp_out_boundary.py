@@ -55,12 +55,16 @@ arcpy.MakeTableView_management(in_table=file_name2, out_view='SP_adrs')
 
 # Set the local parameters
 
-inFeatures = "SP"
-inField = "OBJECTID"
-joinTable = "SP_adrs"
-joinField = "SERVICEPOINTOBJECTID"
+in_layer_or_view = "SP"
+in_field = "OBJECTID"
+join_table = "SP_adrs"
+join_field = "SERVICEPOINTOBJECTID"
+join_type="KEEP_ALL" 
+#arcpy.JoinField_management (inFeatures, inField, joinTable, joinField)
 
-arcpy.JoinField_management (inFeatures, inField, joinTable, joinField)
+
+arcpy.AddJoin_management (in_layer_or_view, in_field, join_table, join_field, join_type)
+
 
 point = arcpy.Point(25282, 43770)
 ptGeometry = arcpy.PointGeometry(point)
