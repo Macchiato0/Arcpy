@@ -1,43 +1,72 @@
 #ctrl+c to stop calculation
 import csv
 
-file_name='E:\\Data\\yfan\\PyModules\\sp_not_in_wkhq.csv'
 
 # create a dictionary of work HQ polygon object and their id
 cursor=arcpy.da.SearchCursor(r'E:\Apps\Application Launch\Electric\CVMWNT0146_GISLand.sde\GISLand.DBO.Land\GISLand.DBO.ElectricDistributionWHQ'
 ,["BOUNDARYNAMECD","SHAPE@"])
 wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 
-wrong_wh_sp=[]
-with open(file_name, 'wb') as csvfile:
+file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
+with open(file_name1, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@","FeederID"])
+  header=["OBJECTID","FEEDERID","SHAPE"]
+  filewriter.writerow(header)
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])
   for i in cursor:
     oid=i[0]
-    pt=i[1]
-    fid=i[2]
-    #select work_hQ from address table:r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress'
-    where="SERVICEPOINTOBJECTID={}".format(oid)
-    cur_adrs=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["STREET","CITY","WORKHEADQUARTERS"],where)
-    for w in cur_adrs:
-      #wh is work HQ,st is street, ct is city
-      st,ct,wh=w[0],w[1],w[2]
-      #filewriter.writerow([st,ct,wh])  
-    #select polygon of workQH bondary
-    if wh is None or not wkhd_plyg[wh].contains(pt) :
-      for k_pg in wkhd_plyg:
-        if wkhd_plyg[k_pg].contains(pt):
-          row=[oid,fid,st,ct,wh,k_pg]
-          wrong_wh_sp.append(oid,wh,k_pg)
-      filewriter.writerow(row) 
-    else:
-      row=[oid,fid,st,ct,wh,wh]
-      filewriter.writerow(row) 
+    fid=i[1]
+    shp=i[2]
+    filewriter.writerow([oid,fid,shp]) 
     
   
-  
-      
+file_name2='E:\\Data\\yfan\\PyModules\\sp_address.csv'
+with open(file_name2, 'wb') as csvfile:
+  filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
+  header=["SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"]
+  filewriter.writerow(header)
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"])
+  for i in cursor:
+    sp_oid=i[0]
+    st=i[1]
+    ct=i[2]
+    wh=i[3]
+    filewriter.writerow([sp_oid,st,ct,wh])       
+
     
-   
-  
-  
+    
+    
+'''
+file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
+file_name2='E:\\Data\\yfan\\PyModules\\sp_address.csv'
+
+data1 = csv.reader(open(file_name1),delimiter=',')
+data2 = csv.reader(open(file_name2),delimiter=',')
+file_name3='E:\\Data\\yfan\\PyModules\\sp_workHQ.csv'
+'''
+
+
+
+
+
+arcpy.env.workspace= 'E:\\Data\\yfan\\PyModules'
+arcpy.MakeTableView_management(in_table=file_name1, out_view='SP')
+arcpy.MakeTableView_management(in_table=file_name2, out_view='SP_adrs')
+
+# Set the local parameters
+
+inFeatures = "SP"
+inField = "OBJECTID"
+joinTable = "SP_adrs"
+joinField = "SERVICEPOINTOBJECTID"
+
+arcpy.JoinField_management (inFeatures, inField, joinTable, joinField)
+
+point = arcpy.Point(25282, 43770)
+ptGeometry = arcpy.PointGeometry(point)
+
+
+
+
+
+
