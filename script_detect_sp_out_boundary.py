@@ -10,7 +10,7 @@ wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 with open(file_name1, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  header=["OBJECTID","FEEDERID","SHAPE"]
+  header=["SP_OBJECTID","FEEDERID","SHAPE"]
   filewriter.writerow(header)
   cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])
   for i in cursor:
@@ -33,8 +33,14 @@ with open(file_name2, 'wb') as csvfile:
     wh=i[3]
     filewriter.writerow([sp_oid,st,ct,wh])       
 
-    
-    
+
+out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
+
+arcpy.TableToTable_conversion(file_name1, out_gdb, 'SP') 
+arcpy.TableToTable_conversion(file_name2, out_gdb, 'SP_adrs') 
+
+
+#above take 20 mins    
     
 '''
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
@@ -59,8 +65,9 @@ in_layer_or_view = "SP"
 in_field = "OBJECTID"
 join_table = "SP_adrs"
 join_field = "SERVICEPOINTOBJECTID"
-join_type="KEEP_ALL" 
-#arcpy.JoinField_management (inFeatures, inField, joinTable, joinField)
+join_type="KEEP_ALL"
+
+arcpy.JoinField_management (inFeatures, inField, joinTable, joinField)
 
 
 arcpy.AddJoin_management (in_layer_or_view, in_field, join_table, join_field, join_type)
