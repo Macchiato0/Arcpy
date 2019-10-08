@@ -8,7 +8,7 @@ cursor=arcpy.da.SearchCursor(r'E:\Apps\Application Launch\Electric\CVMWNT0146_GI
 ,["BOUNDARYNAMECD","SHAPE@"])
 wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 
-
+wrong_wh_sp=[]
 with open(file_name, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
   cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@","FeederID"])
@@ -28,8 +28,11 @@ with open(file_name, 'wb') as csvfile:
       for k_pg in wkhd_plyg:
         if wkhd_plyg[k_pg].contains(pt):
           row=[oid,fid,st,ct,wh,k_pg]
-      filewriter.writerow(row)  
-  
+          wrong_wh_sp.append(oid,wh,k_pg)
+      filewriter.writerow(row) 
+    else:
+      row=[oid,fid,st,ct,wh,wh]
+      filewriter.writerow(row) 
     
   
   
