@@ -10,7 +10,7 @@ wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 with open(file_name1, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  header=["SP_OBJECTID","FEEDERID","SHAPE"]
+  header=["ServiceID","FEEDERID","SHAPE"]
   filewriter.writerow(header)
   cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])
   for i in cursor:
@@ -67,7 +67,7 @@ join_table = "SP_adrs"
 join_field = "SERVICEPOINTOBJECTID"
 join_type="KEEP_ALL"
 
-arcpy.JoinField_management (inFeatures, inField, joinTable, joinField)
+arcpy.JoinField_management ("SP", inField, joinTable, joinField)
 
 
 arcpy.AddJoin_management (in_layer_or_view, in_field, join_table, join_field, join_type)
