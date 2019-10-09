@@ -33,7 +33,7 @@ with open(file_name2, 'wb') as csvfile:
     wh=i[3]
     filewriter.writerow([sp_oid,st,ct,wh])       
 
-
+file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
 
 arcpy.TableToTable_conversion(file_name1, out_gdb, 'SP') 
@@ -45,32 +45,40 @@ arcpy.TableToTable_conversion(file_name2, out_gdb, 'SP_adrs')
 '''
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 file_name2='E:\\Data\\yfan\\PyModules\\sp_address.csv'
-
 data1 = csv.reader(open(file_name1),delimiter=',')
 data2 = csv.reader(open(file_name2),delimiter=',')
 file_name3='E:\\Data\\yfan\\PyModules\\sp_workHQ.csv'
-'''
-
-
-
-
-
 arcpy.env.workspace= 'E:\\Data\\yfan\\PyModules'
 arcpy.MakeTableView_management(in_table=file_name1, out_view='SP')
 arcpy.MakeTableView_management(in_table=file_name2, out_view='SP_adrs')
 
+
+
+
 # Set the local parameters
 
-in_layer_or_view = "SP"
-in_field = "OBJECTID"
-join_table = "SP_adrs"
-join_field = "SERVICEPOINTOBJECTID"
-join_type="KEEP_ALL"
+inFeatures = r'E:\Data\yfan\service_address_WHQ.gdb\SP'
+layerName = "SP_layer"
+joinTable = "SP_adrs"
+Field = "ServiceID"
+field="SERVICEPOINTOBJECTID"
+outFeature = "sp_hq"
+'''
 
-arcpy.JoinField_management ("SP", inField, joinTable, joinField)
+arcpy.env.workspace= r'E:\Data\yfan\service_address_WHQ.gdb'
+arcpy.MakeTableView_management('SP',"SP")
+arcpy.MakeTableView_management("SP_adrs","SP_adrs")
+#arcpy.JoinField_management ("SP", "ServiceID", "SP_adrs", "SERVICEPOINTOBJECTID",["STREET","CITY","WORKHEADQUARTERS"])
 
+#arcpy.MakeFeatureLayer_management ("SP",  layerName)
+    
+# Join the feature layer to a table
+arcpy.AddJoin_management("SP", "ServiceID", "SP_adrs", "SERVICEPOINTOBJECTID","KEEP_COMMON")
+cursor=arcpy.da.SearchCursor("SP",["*"])
+                         
+#arcpy.CopyFeatures_management("SP", outFeature)
 
-arcpy.AddJoin_management (in_layer_or_view, in_field, join_table, join_field, join_type)
+   
 
 
 point = arcpy.Point(25282, 43770)
