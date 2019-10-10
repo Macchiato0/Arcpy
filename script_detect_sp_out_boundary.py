@@ -28,6 +28,7 @@ cursor=arcpy.da.SearchCursor(r'E:\Apps\Application Launch\Electric\CVMWNT0146_GI
 ,["BOUNDARYNAMECD","SHAPE@"])
 wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 
+'''
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 with open(file_name1, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
@@ -42,9 +43,21 @@ with open(file_name1, 'wb') as csvfile:
     filewriter.writerow([oid,spid,fid,shp]) 
     cursor=arcpy.da.SearchCursor("SP",['SP.ServiceID', 'SP.FEEDERID', 'SP.SHAPE','SP_adrs.SERVICEPOINTOBJECTID', 'SP_adrs.STREET', 'SP_adrs.CITY', 'SP_adrs.WORKHEADQUARTERS'])
     
+'''
+    
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])    
+sp={}
+for i in cursor:
+  sp[i[0]]=[i[1],i[2]]
+    
+
     
     
-  
+    
+    
+    
+    
+'''  
 file_name2='E:\\Data\\yfan\\PyModules\\sp_address.csv'
 with open(file_name2, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
@@ -58,15 +71,32 @@ with open(file_name2, 'wb') as csvfile:
     ct=i[2]
     wh=i[3]
     filewriter.writerow([obid,sp_oid,st,ct,wh])       
+'''
 
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"],"SERVICEPOINTOBJECTID is not null")    
+sp_adrs={}
+for r in cursor:
+  sp_adrs[r[0]]=[r[1],r[2],r[3]]
+  
+  
+print len(sp),len(sp_adrs)
+
+for k in sp:
+  try:  
+    for v in sp_adrs[k]:
+      sp[k].append(v)
+  except:
+    pass
     
-    
-    
+print len(sp)      
+
+
+'''    
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
 arcpy.TableToTable_conversion(file_name1, out_gdb, 'SP') 
 arcpy.TableToTable_conversion(file_name2, out_gdb, 'SP_adrs') 
-
+'''
 #above take 20 mins    
     
 '''
@@ -86,7 +116,7 @@ Field = "ServiceID"
 field="SERVICEPOINTOBJECTID"
 outFeature = "sp_hq"
 '''
-
+'''
 arcpy.env.workspace= r'E:\Data\yfan\service_address_WHQ.gdb'
 arcpy.MakeTableView_management('SP',"SP")
 arcpy.MakeTableView_management("SP_adrs","SP_adrs")
