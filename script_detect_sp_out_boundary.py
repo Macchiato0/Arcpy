@@ -1,6 +1,6 @@
 #ctrl+c to stop calculation
 import csv
-
+'''
 file_name4='E:\\Data\\yfan\\PyModules\\sp_adrs_list.csv'
 with open(file_name4, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
@@ -19,7 +19,7 @@ with open(file_name4, 'wb') as csvfile:
       ct=r[1]
       wq=r[2]
       filewriter.writerow([oid,fid,shp,sp_id,st,ct,wq]) 
-      
+'''     
      
     
     
@@ -48,22 +48,24 @@ with open(file_name1, 'wb') as csvfile:
 file_name2='E:\\Data\\yfan\\PyModules\\sp_address.csv'
 with open(file_name2, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  header=["SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"]
+  header=["SP","SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"]
   filewriter.writerow(header)
   cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"])
   for i in cursor:
+    obid=i[0]
     sp_oid=i[0]
     st=i[1]
     ct=i[2]
     wh=i[3]
-    filewriter.writerow([st,ct,wh,sp_oid])       
+    filewriter.writerow([obid,sp_oid,st,ct,wh])       
 
+    
+    
+    
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
-
 arcpy.TableToTable_conversion(file_name1, out_gdb, 'SP') 
 arcpy.TableToTable_conversion(file_name2, out_gdb, 'SP_adrs') 
-arcpy.AddJoin_management("SP", "ServiceID", "SP_adrs", "SERVICEPOINTOBJECTID","KEEP_ALL")
 
 #above take 20 mins    
     
@@ -102,9 +104,9 @@ cursor.fields
 file_name3='E:\\Data\\yfan\\PyModules\\sp_HQ.csv'
 with open(file_name3, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  header=["FEEDERID","SHAPE","SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"]
+  header=[]
   filewriter.writerow(header)
-  cursor=arcpy.da.SearchCursor("SP",['SP.ServiceID', 'SP.FEEDERID', 'SP.SHAPE','SP_adrs.SERVICEPOINTOBJECTID', 'SP_adrs.STREET', 'SP_adrs.CITY', 'SP_adrs.WORKHEADQUARTERS'])
+  cursor=arcpy.da.SearchCursor("SP",[])
   for i in cursor:
     rows=list(i)
     filewriter.writerow(rows)          
