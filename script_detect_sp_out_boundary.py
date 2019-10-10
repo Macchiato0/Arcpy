@@ -118,5 +118,17 @@ ptGeometry = arcpy.PointGeometry(point)
 
 
 
+arcpy.env.workspace= r'E:\Data\yfan\service_address_WHQ.gdb'
+arcpy.MakeTableView_management('SP',"SP")
+arcpy.MakeTableView_management("SP_adrs","SP_adrs")
+#arcpy.JoinField_management ("SP", "ServiceID", "SP_adrs", "SERVICEPOINTOBJECTID",["STREET","CITY","WORKHEADQUARTERS"])
 
+#arcpy.MakeFeatureLayer_management ("SP",  layerName)
+    
+# Join the feature layer to a table
+arcpy.AddJoin_management("SP", "ServiceID", "SP_adrs", "SERVICEPOINTOBJECTID","KEEP_ALL")
+cursor=arcpy.da.SearchCursor("SP",["*"])
+cursor.fields                         
+#arcpy.CopyFeatures_management("SP", outFeature)
+#arcpy.CopyRows_management("SP", "SP_HQ")
 
