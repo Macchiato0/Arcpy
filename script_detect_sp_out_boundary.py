@@ -6,12 +6,12 @@ with open(file_name4, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
   header=["OID","FEEDERID","SHAPE","OID","STEET","CITY","WHQ"]
   filewriter.writerow(header)
-  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE","OID@"])
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])
   for i in cursor:
     oid=i[0]
     fid=i[1]
     shp=i[2]
-    sp_id=i[3]
+    sp_id=i[0]
     where="SERVICEPOINTOBJECTID={}".format(oid)
     cur=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["STREET","CITY","WORKHEADQUARTERS"],where)
     for r in cur:
