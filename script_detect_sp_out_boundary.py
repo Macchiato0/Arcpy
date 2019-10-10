@@ -6,7 +6,7 @@ with open(file_name4, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
   header=["OID","FEEDERID","SHAPE","OID","STEET","CITY","WHQ"]
   filewriter.writerow(header)
-  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"],"ObjectID<50000")
   for i in cursor:
     oid=i[0]
     fid=i[1]
@@ -31,14 +31,15 @@ wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 with open(file_name1, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  header=["ServiceID","FEEDERID","SHAPE"]
+  header=["OBID","ServiceID","FEEDERID","SHAPE"]
   filewriter.writerow(header)
   cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])
   for i in cursor:
     oid=i[0]
+    spid=i[0]
     fid=i[1]
     shp=i[2]
-    filewriter.writerow([oid,fid,shp]) 
+    filewriter.writerow([oid,spid,fid,shp]) 
     cursor=arcpy.da.SearchCursor("SP",['SP.ServiceID', 'SP.FEEDERID', 'SP.SHAPE','SP_adrs.SERVICEPOINTOBJECTID', 'SP_adrs.STREET', 'SP_adrs.CITY', 'SP_adrs.WORKHEADQUARTERS'])
     
     
@@ -55,7 +56,7 @@ with open(file_name2, 'wb') as csvfile:
     st=i[1]
     ct=i[2]
     wh=i[3]
-    filewriter.writerow([sp_oid,st,ct,wh])       
+    filewriter.writerow([st,ct,wh,sp_oid])       
 
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
