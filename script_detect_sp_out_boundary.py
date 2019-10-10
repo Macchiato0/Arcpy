@@ -27,7 +27,7 @@ with open(file_name4, 'wb') as csvfile:
 cursor=arcpy.da.SearchCursor(r'E:\Apps\Application Launch\Electric\CVMWNT0146_GISLand.sde\GISLand.DBO.Land\GISLand.DBO.ElectricDistributionWHQ'
 ,["BOUNDARYNAMECD","SHAPE@"])
 wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
-
+wkhd_plyg
 '''
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 with open(file_name1, 'wb') as csvfile:
@@ -45,7 +45,7 @@ with open(file_name1, 'wb') as csvfile:
     
 '''
     
-cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE"])    
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE@"])    
 sp={}
 for i in cursor:
   sp[i[0]]=[i[1],i[2]]
@@ -79,6 +79,7 @@ for r in cursor:
   sp_adrs[r[0]]=[r[1],r[2],r[3]]
   
   
+ 
 print len(sp),len(sp_adrs)
 
 for k in sp:
@@ -87,9 +88,34 @@ for k in sp:
       sp[k].append(v)
   except:
     pass
-    
-print len(sp)      
+  
+del sp_adrs     
+print len(sp)     
 
+
+
+print sp[1],sp[20],sp[202][1]
+
+
+for k in sp:
+  for k1 in wkhd_plyg:
+    if wkhd_plyg[k1].contains(sp[k][1]):
+      sp[k].append(k1)
+
+      
+      
+print sp[1],sp[20],sp[202]
+
+import json
+
+with open('E:\\Data\\yfan\\PyModules\\sp_hq.json', 'w') as fp:
+  json.dump(sp, fp)
+  
+with open('E:\\Data\\yfan\\PyModules\\sp_hq.json') as f:
+  data = json.load(f)
+
+data[10]
+  
 
 '''    
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
