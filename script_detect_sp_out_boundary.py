@@ -64,19 +64,22 @@ for k in sp:
   sp[k].remove(sp[k][1])
    
     
-    
+import csv    
 import json
-
+#creat json data
 with open('E:\\Data\\yfan\\PyModules\\sp_hq.json', 'w') as fp:
   json.dump(sp, fp)
   
 with open('E:\\Data\\yfan\\PyModules\\sp_real_hq.json', 'w') as fp:
   json.dump(real_sp_wh, fp)
-  
-with open('E:\\Data\\yfan\\PyModules\\sp_hq.json') as f:
-  data = json.load(f)
 
-data[10]
+#open json data
+with open('E:\\Data\\yfan\\PyModules\\sp_hq.json') as f:
+  sp_hq = json.load(f)
+
+with open('E:\\Data\\yfan\\PyModules\\sp_real_hq.json') as f:
+  sp_real_hq = json.load(f)
+
   
 
 '''    
