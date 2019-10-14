@@ -100,8 +100,11 @@ with open(file_name3, 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
   header=["row_id","feederid","address","city","WHQ","service_oid"]
   filewriter.writerow(header)
-  for k_row in sp_hq:    
-    row=[n]+sp_hq[k_row]+[k_row]
+  for k_row in sp_hq:  
+    if len(sp_hq[k_row])<4:
+      row=[n]+['','','','']+[k_row]
+    else:
+      row=[n]+sp_hq[k_row]+[k_row]
     filewriter.writerow(row)    
     n+=1
     
