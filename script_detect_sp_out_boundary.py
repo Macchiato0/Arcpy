@@ -80,8 +80,32 @@ with open('E:\\Data\\yfan\\PyModules\\sp_hq.json') as f:
 with open('E:\\Data\\yfan\\PyModules\\sp_real_hq.json') as f:
   sp_real_hq = json.load(f)
 
-  
+part_sp={}  
+for k in sp_real_hq:
+    insert_l=sp_hq[k][:3]+[sp_real_hq[k]]
+    part_sp[k]=insert_l
 
+#pop the k in part_up from sp_hq
+#? pop print out the poped item
+n=0
+for k in part_sp:
+    sp_hq.pop(k)
+    n+=1
+
+sp_hq.update(part_sp)
+
+n=1
+file_name3='E:\\Data\\yfan\\PyModules\\sp_HQ.csv'
+with open(file_name3, 'wb') as csvfile:
+  filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
+  header=["row_id","feederid","address","city","WHQ","service_oid"]
+  filewriter.writerow(header)
+  for k_row in sp_hq:    
+    row=[n]+sp_hq[k_row]+[k_row]
+    filewriter.writerow(row)    
+    n+=1
+    
+    
 '''    
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
