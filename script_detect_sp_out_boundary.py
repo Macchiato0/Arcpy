@@ -79,7 +79,7 @@ for i in no_address:
 print len(no_address_sp),no_address[10000]
 
 sp[1414737]
-
+sp[14]
 
 n=0
 for i in sp:
@@ -109,8 +109,23 @@ check the number
 n=0
 for k in sp:
   if len(sp[k])!=6:
-    print sp[k],k
+    print sp[14],k
+    
+check the none whq
+no_hq=[]
+for k in sp:
+  if not sp[k][5]:
+    no_hq.append(k)
+print len(no_hq)    
+no_hq[9]   
+sp[4114657]
 
+for i in no_hq:
+  for k in wkhd_plyg:
+    if wkhd_plyg[k].contains(sp[i][1]):
+      a=k  
+      sp[i][5]=a
+        
 #fix the sp[k] not in boundary
 2221439,3167552
 for k in wkhd_plyg:
@@ -131,11 +146,21 @@ with open(file_name3, 'wb') as csvfile:
     filewriter.writerow(row)    
     n+=1    
 
+for k in sp:
+    a=[sp[k][0]]+sp[k][2:]
+    
+sp[1095743]
+len(no_hq),len(no_address_sp),len(    
 import csv    
 import json
 #creat json data
+sp_dump={}
+for k in sp:
+    sp_dump[k]=[sp[k][0]]+sp[k][2:]
+    
+    
 with open('E:\\Data\\yfan\\PyModules\\sp_hq.json', 'w') as fp:
-  json.dump(sp, fp)
+  json.dump(sp_dump, fp)
   
 with open('E:\\Data\\yfan\\PyModules\\sp_real_hq.json', 'w') as fp:
   json.dump(real_sp_wh, fp)
