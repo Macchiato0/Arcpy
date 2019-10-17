@@ -1,17 +1,69 @@
 #ctrl+c to stop calculation
 import csv
-
+from functools import reduce
+import json
 # create a dictionary of work HQ polygon object and their id
 cursor=arcpy.da.SearchCursor(r'E:\Apps\Application Launch\Electric\CVMWNT0146_GISLand.sde\GISLand.DBO.Land\GISLand.DBO.ElectricDistributionWHQ'
 ,["BOUNDARYNAMECD","SHAPE@"])
 wkhd_plyg=dict ([(i[0],i[1]) for i in cursor])
 wkhd_plyg
+u_31=[]
+for k in wkhd_plyg:
+    b=wkhd_plyg[k].boundary () 
+    a=b.buffer(500)
+    u_31.append(a)
+al_31=reduce(lambda a,b : a.union(b),u_31)
+cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\wq',["SHAPE@"])
+cursor.insertRow([al_31])
+
+cursor = arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\wq',["SHAPE@"])
+for i in cursor:
+    ply=i[0]
+
+#Set geoprocessing environments 
+n=0
+sp_oid_sp={}
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@XY"])
+for row in cursor:
+  sp_oid_sp[row[0]]=row[1]  
+  n+=1
+  if (n%19013==0):
+    print n*100//1901285
     
+    
+    
+sp_oid['287145']
+
+with open('E:\\Data\\yfan\\PyModules\\sp_oid.json', 'w') as fp:
+  json.dump(sp_oid_sp, fp)    
+    
+with open('E:\\Data\\yfan\\PyModules\\sp_oid.json') as f:
+  sp_oid = json.load(f)
+                
+               
+len(sp_oid_sp)    
+sp_oid['1']
+                               
+                             
+                          
+n=0
+sp_inbuffer=[]
+for k in sp_oid:
+  n+=1  
+  pt=arcpy.Point(sp_oid[k][0],sp_oid[k][1])
+  if ply.contains(pt):
+    sp_inbuffer.append(k)  
+  if (n%19013==0):
+    print n*100//1901285
+    
+    
+'''    
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE@"])    
 sp={}
 for i in cursor:
   sp[i[0]]=[i[1],i[2]]
-len(sp)    
+print len(sp)    
+
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["SERVICEPOINTOBJECTID","STREET","CITY","WORKHEADQUARTERS"],"SERVICEPOINTOBJECTID is not null")    
 sp_adrs={}
 for r in cursor:
@@ -31,7 +83,8 @@ for k in sp:
 del sp_adrs     
 print len(sp)     
 
-
+del sp
+del sp_adrs
 
 print sp[1],sp[20],sp[202][1]
 
@@ -46,12 +99,32 @@ for k in sp:
       out_bound.append(k)
   except:
     pass
-      
+               
 print len(out_bound)   
 out_bound[10000]
 sp[1414737]
 
+out_bound[0:1000]
 
+
+for i in out_bound[0:1000]:
+  w1='OBJECTID={}'.format(i)  
+  cursor1=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@"],w1) 
+  for row in cursor1:
+    pt=row[1]
+  w2="SERVICEPOINTOBJECTID={}".format(i)    
+  cursor2=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["WORKHEADQUARTERS"],w2) 
+  for row in cursor2:
+    whq=row[0]
+  meter=wkhd_plyg[whq].distanceTo(pt)
+  print i,whq,meter
+    
+
+
+
+
+
+    
 real_sp_wh={}
 for i in out_bound:
   for k in wkhd_plyg:
