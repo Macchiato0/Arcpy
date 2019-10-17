@@ -10,7 +10,7 @@ wkhd_plyg
 u_31=[]
 for k in wkhd_plyg:
     b=wkhd_plyg[k].boundary () 
-    a=b.buffer(500)
+    a=b.buffer(50)
     u_31.append(a)
 al_31=reduce(lambda a,b : a.union(b),u_31)
 cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\wq',["SHAPE@"])
