@@ -10,7 +10,7 @@ wkhd_plyg
 u_31=[]
 for k in wkhd_plyg:
     b=wkhd_plyg[k].boundary () 
-    a=b.buffer(50)
+    a=b.buffer(500)
     u_31.append(a)
 al_31=reduce(lambda a,b : a.union(b),u_31)
 cursor = arcpy.da.InsertCursor(r'E:\Data\yfan\sand_box.gdb\wq',["SHAPE@"])
@@ -29,10 +29,18 @@ for row in cursor:
   n+=1
   if (n%19013==0):
     print n*100//1901285
-    
-    
+
+oid_whq={}
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ServiceAddress',["SERVICEPOINTOBJECTID","WORKHEADQUARTERS"])
+for row in cursor:
+  oid_whq[row[0]]=row[1]  
     
 sp_oid['287145']
+with open('E:\\Data\\yfan\\PyModules\\oid_whq.json', 'w') as fp:
+  json.dump(oid_whq, fp)  
+
+with open('E:\\Data\\yfan\\PyModules\\oid_whq.json') as fp:
+  oid_whq = json.load(fp)   
 
 with open('E:\\Data\\yfan\\PyModules\\sp_oid.json', 'w') as fp:
   json.dump(sp_oid_sp, fp)    
@@ -55,8 +63,72 @@ for k in sp_oid:
     sp_inbuffer.append(k)  
   if (n%19013==0):
     print n*100//1901285
+
+
+
+
+# open output file for writing
+with open('E:\\Data\\yfan\\PyModules\\sp_in500.txt', 'w') as filehandle:
+    json.dump(sp_inbuffer, filehandle) 
     
-    
+with open('E:\\Data\\yfan\\PyModules\\sp_in500.txt') as fp:
+  p = json.load(fp)   
+
+
+pt_buff=[]
+pt_wr=[]
+for i in p:
+  pt_xy=sp_oid[str(i)]
+  pt=arcpy.Point(pt_xy[0],pt_xy[1])
+  try:     
+    whq = oid_whq[str(i)]
+    pg=wkhd_plyg[whq]
+    m=pg.distanceTo(pt) 
+    if m>0 and m<500:
+      pt_buff.append(i)
+    if m>500:
+      pt_wr.append(i)  
+  except:  
+    pass  
+        
+#remove the erro caused by wrong whq        
+with open('E:\\Data\\yfan\\PyModules\\feeder_hdq.json') as fp:
+  feeder_hdq = json.load(fp)          
+
+pt_buff_fid={}
+
+for i in pt_buff:
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["FEEDERID"],"OBJECTID={}".format(i))
+  for r in cursor:
+    fid=r[0]
+  pt_buff_fid[i]=fid  
+
+
+pt_buff_2=[i for i in pt_buff]
+for k in pt_buff_fid:
+  try:
+    whq1 = oid_whq[k]
+    whq2=feeder_hdq[pt_buff_fid[k]]
+    if whq1!=whq2:
+      pt_buff_2.remove(k)
+  except:
+    pass
+
+        
+with open('E:\\Data\\yfan\\PyModules\\sp_out_bound.csv', 'wb') as csvfile:
+  filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
+  header=["Service_oid","Feederid","Device","WHQ"]
+  filewriter.writerow(header)
+  for i in pt_buff_2:  
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["DEVICELOCATION"],"OBJECTID={}".format(i))
+    for r in cursor:
+        dv=r[0]
+    row=[i,pt_buff_fid[i],dv,oid_whq[i]]    
+    filewriter.writerow(row)        
+        
+
+
+
 '''    
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","FeederID","SHAPE@"])    
 sp={}
@@ -253,12 +325,12 @@ for k in sp_hq:
         n+=1
         
         
-'''
+
 part_sp={}  
 for k in sp_real_hq:
     insert_l=sp_hq[k][:3]+[sp_real_hq[k]]
     part_sp[k]=insert_l
-'''
+
 #pop the k in part_up from sp_hq
 #? pop print out the poped item
 n=0
@@ -283,7 +355,7 @@ with open(file_name3, 'wb') as csvfile:
     n+=1
     
     
-'''    
+    
 file_name1='E:\\Data\\yfan\\PyModules\\sp_list.csv'
 out_gdb = r'E:\Data\yfan\service_address_WHQ.gdb'
 arcpy.TableToTable_conversion(file_name1, out_gdb, 'SP') 
