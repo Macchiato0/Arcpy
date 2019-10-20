@@ -10,6 +10,8 @@ with open('E:\\Data\\ESME\\TLMAnalysis\\010702.csv') as csvfile:
 tlm.pop(0)
 sp_oid.pop(0)
 
+sp_tlm=zip(sp_oid,tlm)
+
 def update_tlm(sp,tlm):
   workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
   edit = arcpy.da.Editor(workspace)
@@ -22,4 +24,5 @@ def update_tlm(sp,tlm):
     cursor.updateRow(row)
   edit.stopOperation()
   
-  for 
+for i in sp_tlm:
+  update_tlm(i[0],i[1])
