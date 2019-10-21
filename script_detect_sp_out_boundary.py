@@ -114,18 +114,31 @@ for k in pt_buff_fid:
   except:
     pass
 
-        
+real_whd={}
+for i in pt_buff_2:
+  p=sp_oid[str(i)]    
+  pt=arcpy.Point(p[0],p[1])
+  for k in wkhd_plyg:
+    if wkhd_plyg[k].contains(pt):
+      real_whd[i]=k
+    
+
+
 with open('E:\\Data\\yfan\\PyModules\\sp_out_bound.csv', 'wb') as csvfile:
   filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
-  header=["Service_oid","Feederid","Device","WHQ"]
+  header=["Service_oid","Feederid","Device","WHQ","Real_WHQ"]
   filewriter.writerow(header)
   for i in pt_buff_2:  
-    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["DEVICELOCATION"],"OBJECTID={}".format(i))
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["FEEDERID","DEVICELOCATION"],"OBJECTID={}".format(i))
     for r in cursor:
-        dv=r[0]
-    row=[i,pt_buff_fid[i],dv,oid_whq[i]]    
-    filewriter.writerow(row)        
-        
+        dv=r[1]
+        fid=r[0]
+    try:    
+      row=[i,fid,dv,oid_whq[str(i)],real_whd[i]]  
+    except:
+      row=[i,fid,dv,oid_whq[str(i)],'None']  
+    filewriter.writerow(row)
+
 
 
 
