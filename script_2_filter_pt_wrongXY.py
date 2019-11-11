@@ -4,7 +4,8 @@
 import math
 
 #data colection
-cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Service Point",["OID@","SHAPE@","LATITUDE","LONGITUDE"]
+where="LATITUDE is not null and LONGITUDE is not null"
+cursor=arcpy.da.SearchCursor(r"Customers & Transformers\Service Point",["OID@","SHAPE@","LATITUDE","LONGITUDE"],where)
 
 raw_list=[i for i in cursor]
 
@@ -32,6 +33,14 @@ pt2_coor=[(i[2],i[3]) for i in raw_list]
                              
 dist=map(distance_degree,pt1_coor,pt2_coor)
                              
+pt1_coor[:100]
+pt2_coor[:100]
+[i for i in pt2_coor if i is None]
+len(dist)
+dist[:100]
+dist_feet[:100]
+oid[:100]
+len(oid)
 
 #364320 feet=1 decimal degree
 #convert decimal degree to feet
@@ -40,13 +49,17 @@ oid=[i[0] for i in raw_list]
 tu=lambda a,b : (a,b)                              
 oid_dist_feet=map(tu, oid,dist_feet)
 oid_dist_feet[2]
-                             
+dist_over_723km[:100]
+[i[0] for i in dist_over_723km[:100]]
+
 #dist over 250 feet
 #filter the pt with questionable delta distance(delta distance=GPS_XY-MAP_XY)
-dist_over_250= [i for i in oid_dist_feet if i[1]>250]
-len(dist_over_250)   40130                         
-dist_over_500= [i for i in oid_dist_feet if i[1]>500]  
-len(dist_over_500)   35858                             
+dist_over_250= [i for i in oid_dist_feet if 500>i[1]>250]
+len(dist_over_250)   5763                         
+dist_over_500= [i for i in oid_dist_feet if 1000>i[1]>500]  
+len(dist_over_500)   6652     
+dist_over_500= [i for i in oid_dist_feet if 1000>i[1]>500]  
+len(dist_over_500)   6652
 dist_over_723km= [i for i in oid_dist_feet if i[1]>2.4016e+6]  
 len(dist_over_723km)   30790                          
                              
