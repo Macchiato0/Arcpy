@@ -37,6 +37,46 @@ for k in acc_geo_0:
   except:
     pass
   
-print len(acc_dist)   
+print acc_dist[u'7001391527']
+print len(x)
+
+x = [acc_dist[key] for key in acc_dist]
+import numpy
+arr = numpy.array(x)
+counts, bins = numpy.histogram(x)
+plt.hist(bins[:-1], bins, weights=counts)
+(array([  3.84359000e+05,   3.00000000e+00,   0.00000000e+00,
+         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+         0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
+         1.00000000e+00]), array([  7.73989990e-07,   1.47390595e+04,   2.94781191e+04,
+         4.42171786e+04,   5.89562381e+04,   7.36952977e+04,
+         8.84343572e+04,   1.03173417e+05,   1.17912476e+05,
+         1.32651536e+05,   1.47390595e+05]), <a list of 10 Patch objects>)
+
+#pick out the outliars
+
+y=[i for i in x if i>99]
+num_bins=20
+n, bins, patches = plt.hist(y, num_bins, facecolor='blue', alpha=0.5)
+plt.show()
+
+
+import json
+with open(r'E:\Data\yfan\PyModules\acc_dist1125.json', 'w') as fp:
+    json.dump(acc_dist, fp)
+    
+
+#open python idel
+import json
+with open(r'E:\Data\yfan\PyModules\acc_dist1125.json', 'r') as fp:
+    acc_dist=json.loads(fp.read())
+    
+len(acc_dist)
+
+import matplotlib.pyplot as plt
+
+x = [acc_dist[key] for key in acc_dist]
+
+plt.hist(x, bins = 100)
 
 
