@@ -66,7 +66,7 @@ with open(r'E:\Data\yfan\PyModules\acc_dist1125.json', 'w') as fp:
     json.dump(acc_dist, fp)
     
 
-#open python idel
+#open python idle
 import json
 with open(r'E:\Data\yfan\PyModules\acc_dist1125.json', 'r') as fp:
     acc_dist=json.loads(fp.read())
@@ -75,7 +75,28 @@ len(acc_dist)
 
 import matplotlib.pyplot as plt
 
-x = [acc_dist[key] for key in acc_dist]
+x = [[key,acc_dist[key]] for key in acc_dist]
+
+l_1000_2000=[]
+
+for i in x:
+  dist=i[1]
+  if dist<2000 and dist>1000:
+    l_1000_2000.append(i)
+
+l_1_2=[]    
+for i in l_1000_2000:
+  acct=i[0]
+  where='ACCOUNTNUMBER={}'.format(acct)
+  try:
+    cursor=arcpy.da.SearchCursor("ELECDIST.ServiceAddress",["SERVICEPOINTOBJECTID"],where)    
+    for row in cursor:
+      sp_id=row[0]
+      r=sp_id+i
+    l_1_2.append(r)
+  except:
+    pass
+
 
 plt.hist(x, bins = 100)
 
