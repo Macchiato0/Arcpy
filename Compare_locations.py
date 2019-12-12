@@ -73,7 +73,7 @@ with open(r'E:\Data\yfan\PyModules\acc_dist1125.json', 'r') as fp:
     
 len(acc_dist)
 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 x = [[key,acc_dist[key]] for key in acc_dist]
 
@@ -87,9 +87,9 @@ for i in x:
 l_1_2=[]    
 for i in l_1000_2000:
   acct=i[0]
-  where='ACCOUNTNUMBER={}'.format(acct)
+  where='ELECDIST.ServiceAddress.ACCOUNTNUMBER={}'.format(acct)
   try:
-    cursor=arcpy.da.SearchCursor("ELECDIST.ServiceAddress",["SERVICEPOINTOBJECTID"],where)    
+    cursor=arcpy.da.SearchCursor(r'Customers & Transformers\Service Point',["ELECDIST.ServicePoint.OBJECTID"],where)    
     for row in cursor:
       sp_id=row[0]
       r=sp_id+i
