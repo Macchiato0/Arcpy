@@ -4,8 +4,8 @@ def temp_move(a):#sp move
     edit.startEditing(False, True)
     edit.startOperation()
     
-    where="DEVICELOCATION={}".format(a)
-    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\sp032002',["SHAPE@"],where)
+    where="ServicePoint_DEVICELOCATION={}".format(a)
+    cursor=arcpy.da.SearchCursor('sp032002',["SHAPE@"],where)
     for row in cursor:
         sp_geo=row[0]        
         
@@ -18,7 +18,7 @@ def temp_move(a):#sp move
     edit.stopOperation()
     
     
-cursor=arcpy.da.SearchCursor('sp107502',["DEVICELOCATION"])
+cursor=arcpy.da.SearchCursor('sp032002',["ServicePoint_DEVICELOCATION"])
 for i in cursor:
     temp_move(i[0])    
 
