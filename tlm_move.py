@@ -18,6 +18,6 @@ def tlm_move(a):
     edit.stopOperation()
 
 
-cursor=arcpy.da.SearchCursor('tlm107502',["TLM"])
+cursor=arcpy.da.SearchCursor('tlm032002',["TLM"])
 for i in cursor:
     tlm_move(i[0])    
