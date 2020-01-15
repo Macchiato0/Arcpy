@@ -16,3 +16,8 @@ def tlm_move(a):
         cursor.updateRow(row)
         
     edit.stopOperation()
+
+
+cursor=arcpy.da.SearchCursor('tlm107502',["TLM"])
+for i in cursor:
+    tlm_move(i[0])    
