@@ -1,4 +1,4 @@
-def temp_move(a):
+def temp_move(a):#sp move
     workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
@@ -16,5 +16,10 @@ def temp_move(a):
         cursor.updateRow(row)
         
     edit.stopOperation()
+    
+    
+cursor=arcpy.da.SearchCursor('sp107502',["DEVICELOCATION"])
+for i in cursor:
+    temp_move(i[0])    
 
     
