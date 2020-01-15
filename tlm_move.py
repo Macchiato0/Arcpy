@@ -5,14 +5,14 @@ def tlm_move(a):
     edit.startOperation()
     
     where="TLM='{}'".format(a)
-    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\tlm107502',["SHAPE@"],where)
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\tlm032002',["SHAPE@"],where)
     for row in cursor:
-        tlm_107502=row[0]        
+        tlm_geo=row[0]        
         
     where="TLM='{}'".format(a)
     cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.Transformer',["SHAPE@"],where)
     for row in cursor:
-        row[0]=tlm_107502
+        row[0]=tlm_geo
         cursor.updateRow(row)
         
     edit.stopOperation()
