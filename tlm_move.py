@@ -5,7 +5,7 @@ def tlm_move(a):
     edit.startOperation()
     
     where="TLM='{}'".format(a)
-    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\tlm032002',["SHAPE@"],where)
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\sand_box.gdb\tlm091602',["SHAPE@"],where)
     for row in cursor:
         tlm_geo=row[0]        
         
@@ -18,6 +18,6 @@ def tlm_move(a):
     edit.stopOperation()
 
 
-cursor=arcpy.da.SearchCursor('tlm032002',["TLM"])
+cursor=arcpy.da.SearchCursor('tlm091602',["TLM"])
 for i in cursor:
     tlm_move(i[0])    
