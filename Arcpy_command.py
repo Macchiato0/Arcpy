@@ -42,20 +42,28 @@ arcpy.SelectLayerByAttribute_management("primary_un","SWITCH_SELECTION")
 arcpy.MakeFeatureLayer_management("primary_un","primary_un2pole_trans")                                       
                                        
 '''
-4.	PriOHElectricLineSegment (Subtype <> 7) AND PriUGElectricLineSegment (Subtype <> 7) where EQUIPMENTID = XFMR_DEFAULT
+3.PriOHElectricLineSegment (Subtype <> 7) AND PriUGElectricLineSegment (Subtype <> 7) where EQUIPMENTID = XFMR_DEFAULT
 '''
+                                       
 #select Primary Overhead with CYME Equipment ID 'XFMR_DEFAULT'                                        
 arcpy.SelectLayerByAttribute_management(r"Primary Lines\Primary Overhead Conductor","NEW_SELECTION","EQUIPMENTID= 'XFMR_DEFAULT'")      
 arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Overhead Conductor","primary_oh_XFMR_DEFAULT")
 #select Primary Underground with CYME Equipment ID 'XFMR_DEFAULT'  
 arcpy.SelectLayerByAttribute_management(r"Primary Lines\Primary Underground Conductor","NEW_SELECTION","EQUIPMENTID= 'XFMR_DEFAULT'")  
-arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Underground Conductor","primary_un_XFMR_DEFAULT")
+arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Underground Conductor","primary_ud_XFMR_DEFAULT")
                                         
-
-                                        
-
-                                        
-                                        
+'''
+4.PriOHElectricLineSegment (Subtype = 7) AND PriUGElectricLineSegment (Subtype = 7) where EQUIPMENTID IS Null
+'''
+arcpy.SelectLayerByAttribute_management(r"Primary Lines\Primary Overhead Conductor","NEW_SELECTION","EQUIPMENTID is null") 
+arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Overhead Conductor","null_Primary_Overhead")                                     
+arcpy.CalculateField_management("null_Primary_Overhead","EQUIPMENTID",'"XFMR_DEFAULT"',"VB")                                   
+                                       
+                                       
+                                       
+arcpy.SelectLayerByAttribute_management(r"Primary Lines\Primary Underground Conductor","NEW_SELECTION","EQUIPMENTID is null")
+arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Underground Conductor","null_Primary_Underground")                                          
+arcpy.CalculateField_management("null_Primary_Underground","EQUIPMENTID",'"XFMR_DEFAULT"',"VB")                                        
                                         
                                         
                                         
