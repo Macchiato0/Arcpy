@@ -41,3 +41,29 @@ if all primary_un is select, there will be no primary underground connected to p
 arcpy.SelectLayerByAttribute_management("primary_un","SWITCH_SELECTION") 
 arcpy.MakeFeatureLayer_management("primary_un","primary_un2pole_trans")                                       
                                        
+'''
+4.	PriOHElectricLineSegment (Subtype <> 7) AND PriUGElectricLineSegment (Subtype <> 7) where EQUIPMENTID = XFMR_DEFAULT
+'''
+#select Primary Overhead with CYME Equipment ID 'XFMR_DEFAULT'                                        
+arcpy.SelectLayerByAttribute_management(r"Primary Lines\Primary Overhead Conductor","NEW_SELECTION","EQUIPMENTID= 'XFMR_DEFAULT'")      
+arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Overhead Conductor","primary_oh_XFMR_DEFAULT")
+#select Primary Underground with CYME Equipment ID 'XFMR_DEFAULT'  
+arcpy.SelectLayerByAttribute_management(r"Primary Lines\Primary Underground Conductor","NEW_SELECTION","EQUIPMENTID= 'XFMR_DEFAULT'")  
+arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Underground Conductor","primary_un_XFMR_DEFAULT")
+                                        
+
+                                        
+
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
