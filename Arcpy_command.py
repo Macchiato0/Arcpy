@@ -26,7 +26,8 @@ arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Underground Conductor"
 arcpy.SelectLayerByAttribute_management(r"Customers & Transformers\Secondary Transformers","NEW_SELECTION","LOCATIONTYPE = 'PAD'")
 #<Result 'Customers & Transformers\\Secondary Transformers'>
 arcpy.MakeFeatureLayer_management(r"Customers & Transformers\Secondary Transformers",'Pad_transformers')                                 
-#select the overhead primary lines connected to padmount transformers      
+#select the overhead trans connect lines connected to padmount transformers 
+arcpy.SelectLayerByLocation_management(r"Customers & Transformers\Transformer Connector Lines\OH Connector Line","INTERSECT","Pad_transformers")                                        
 arcpy.SelectLayerByLocation_management("primary_oh","INTERSECT","Pad_transformers") 
 #make a layer "primary_oh2pad_trans" of the selection
 arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Overhead Conductor","primary_oh2pad_trans")
