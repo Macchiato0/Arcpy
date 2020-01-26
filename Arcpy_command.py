@@ -22,7 +22,7 @@ arcpy.MakeFeatureLayer_management(r"Primary Lines\Primary Underground Conductor"
 '''                                       
 2.PriOHElectricLineSegment (Subtype = 7) where they intersect Transformers (LOCATIONTYPE = PAD) vise versa
 '''
-#select padmont transformer and make a layer
+#select pad mounted transformer and make a layer
 arcpy.SelectLayerByAttribute_management(r"Customers & Transformers\Secondary Transformers","NEW_SELECTION","LOCATIONTYPE = 'PAD'")
 #<Result 'Customers & Transformers\\Secondary Transformers'>
 arcpy.MakeFeatureLayer_management(r"Customers & Transformers\Secondary Transformers",'Pad_transformers')                                 
@@ -30,14 +30,12 @@ arcpy.MakeFeatureLayer_management(r"Customers & Transformers\Secondary Transform
 arcpy.SelectLayerByLocation_management(r"Customers & Transformers\Transformer Connector Lines\OH Connector Line","INTERSECT","Pad_transformers")                                        
 #make a layer "primary_oh2pad_trans" of the selection
 arcpy.MakeFeatureLayer_management(r"Customers & Transformers\Transformer Connector Lines\OH Connector Line","oh_padtrans")
-
-#select underground primary lines connected to pole transformer and make a layer
-arcpy.SelectLayerByLocation_management("primary_un","INTERSECT","Pad_transformers")           
-'''
-if all primary_un is select, there will be no primary underground connected to pole transformers
-'''                                       
-arcpy.SelectLayerByAttribute_management("primary_un","SWITCH_SELECTION") 
-arcpy.MakeFeatureLayer_management("primary_un","primary_un2pole_trans")                                       
+ 
+#select pole transformer and make a layer
+arcpy.SelectLayerByAttribute_management(r"Customers & Transformers\Secondary Transformers","NEW_SELECTION","LOCATIONTYPE =  'POLE'")                                    
+arcpy.MakeFeatureLayer_management(r"Customers & Transformers\Secondary Transformers",'Pole_transformers')
+arcpy.SelectLayerByLocation_management(r"Customers & Transformers\Transformer Connector Lines\UG Connector Line","INTERSECT","Pole_transformers")     
+arcpy.MakeFeatureLayer_management(r"Customers & Transformers\Transformer Connector Lines\UG Connector Line","ug_poletrans")                                       
                                        
 '''
 3.PriOHElectricLineSegment (Subtype <> 7) AND PriUGElectricLineSegment (Subtype <> 7) where EQUIPMENTID = XFMR_DEFAULT
