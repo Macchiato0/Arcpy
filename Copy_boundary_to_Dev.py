@@ -4,7 +4,7 @@ workspace = r'Database Connections\Connection to (OMS-DEV-SDE).sde'
 edit = arcpy.da.Editor(workspace)
 edit.startEditing(False, True)
 edit.startOperation()
-cursor=arcpy.da.UpdateCursor(r'Database Connections\Connection to (OMS-DEV-SDE).sde\ELECDIST.ElectricDist_GO\ELECDIST.Boundary_Feeder_GO',"*", "FEEDERID = '061302'") 
+cursor=arcpy.da.UpdateCursor(r'Database Connections\Connection to (OMS-DEV-SDE).sde\ELECDIST.ElectricDist_GO\ELECDIST.Boundary_Feeder_GO',"*") 
 for row in cursor:
     cursor.deleteRow()
 edit.stopOperation()
@@ -17,7 +17,7 @@ workspace = r'Database Connections\Connection to (OMS-DEV-SDE).sde'
 edit = arcpy.da.Editor(workspace)
 edit.startEditing(False, True)
 edit.startOperation()
-cursor=arcpy.da.SearchCursor("Boundary_feeder_Go selection",fields)
+cursor=arcpy.da.SearchCursor(r'K:\GISElec_BusinessSupport\YiFan\Boundary_go.gdb\Boundary_feeder_Go_new',fields)
 for row in cursor:
     cursor1=arcpy.da.InsertCursor(r'Database Connections\Connection to (OMS-DEV-SDE).sde\ELECDIST.ElectricDist_GO\ELECDIST.Boundary_Feeder_GO',fields)
     f=[i for i in row]
