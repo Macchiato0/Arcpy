@@ -13,7 +13,7 @@
 
 import arcpy
 
-gg_file="XY-address-Lat-Long"
+gg_file='XYBay-City-Address'
 
 cursor=arcpy.da.SearchCursor(gg_file,["OID_","Lat","Long"])
 
