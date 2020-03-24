@@ -37,7 +37,57 @@ circuit_fd=[]
 for row in cursor:
     circuit_fd.append(row[0])
     circuit_shp.append(row[1])
-    
+'''
+duplicate circuit exsits, fix curcuit shp with correct polygons
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["FEEDERID"])
+fl=[i[0] for i in cursor]
+set([i for i in fl if fl.count(i)>1])
+
+
+[u'115601', u'072102', u'069301', u'205001', u'099501', u'112401', u'084003', u'048101', u'096301', u'119401', u'077301', u'145501', u'058401']
+
+FEEDERID='058401'
+FEEDERID='115601'
+FEEDERID='099501'
+FEEDERID='112401'
+FEEDERID='205001'
+FEEDERID='048101'
+FEEDERID='072102'
+FEEDERID='069301'
+FEEDERID='096301'
+FEEDERID='119401'
+FEEDERID='077301'
+FEEDERID='145501'
+
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+
+circuit['058401']=i[0]
+circuit['115601']=i[0]
+circuit['099501']=i[0]
+circuit['112401']=i[0]
+circuit['205001']=i[0]
+circuit['048101']=i[0]
+circuit['072102']=i[0]
+circuit['069301']=i[0]
+circuit['096301']=i[0]
+circuit['119401']=i[0]
+
+
+FEEDERID='084003'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+union_shp=[]
+for i in cursor:
+    union_shp.append(i[0])
+
+a=union_shp[0]
+b=union_shp[1]
+c=a.union(b)
+
+circuit['084003']=c
+
+'''
 sec_shp=[]
 sec_nm=[]
 cursor=arcpy.da.SearchCursor("sectionXcircuits",["SECTIONNAME","SHAPE@"])
