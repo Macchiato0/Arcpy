@@ -161,7 +161,7 @@ sec_cir_contain={}
 for i in range(len(k_within)):
     sec_cir_contain[k_within[i]]=[]
     for j in range(len(circuit_fd)):
-        if circuit_shp[j].contains(k_shp[i]):
+        if circuit_shp[j].contains(k_shp[i]) or k_shp[i].contains(circuit_shp[j]):
             sec_cir_contain[k_within[i]].append(circuit_fd[j])    
 
 for k in sec_cir_contain:
