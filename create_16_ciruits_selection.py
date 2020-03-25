@@ -1,7 +1,7 @@
 import json
-with open(r'E:\Data\yfan\sec_cir_update.json', 'rb') as fp:
+with open(r'E:\Data\yfan\sec_cir_update_24.json', 'rb') as fp:
     data_dict = json.load(fp)
-
+'''
 #get rid of feederid=='0'
 for k in data_dict:
     if '0' in data_dict[k]:
@@ -16,16 +16,17 @@ cursor=arcpy.da.SearchCursor(r"CE Landbase\Sixteenth Section",["SHAPE@","SIXTEEN
 
 where="FEEDERID= '{}'".format(n)
 cursor=arcpy.da.SearchCursor(r'Org Bounds\Circuit Boundaries',["FEEDERID","SHAPE@"],where)
-
-244128
+'''
+import copy
+13152
 sixteen_feed={}
 for k in data_dict:
-    if len(data_dict[k])==1:
-        fd1=data_dict[k]
+    if len(data_dict[k])<=1:
+        fd1=copy.deepcopy(data_dict[k])
         where1="SIXTEENTHSECTIONNAME like '{}%'".format(k) 
         cursor1=arcpy.da.SearchCursor(r"CE Landbase\Sixteenth Section",["SIXTEENTHSECTIONNAME"],where1)
         for r1 in cursor1:
-            sixteen_feed[r1]=fd1
+            sixteen_feed[r1]=copy.deepcopy(fd1)
 
 
 
