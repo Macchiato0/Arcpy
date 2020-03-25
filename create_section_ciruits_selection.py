@@ -253,7 +253,10 @@ for k in sec_cir_contain:
 
 with open(r'E:\Data\yfan\sec_cir_update_24.json', 'w') as fp:
     json.dump(sec_cir_update, fp)
-    
+
+with open(r'E:\Data\yfan\sec_cir_update_24.json', 'rb') as fp:
+    data_dict1 = json.load(fp)    
+'''    
 #manually check the section poly without any circuit
 
 [k for k in sec_cir_merge if sec_cir_merge[k]==[]]
