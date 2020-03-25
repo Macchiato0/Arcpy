@@ -18,7 +18,7 @@ where="FEEDERID= '{}'".format(n)
 cursor=arcpy.da.SearchCursor(r'Org Bounds\Circuit Boundaries',["FEEDERID","SHAPE@"],where)
 '''
 import copy
-13152
+209230
 sixteen_feed={}
 for k in data_dict:
     if len(data_dict[k])<=1:
@@ -31,49 +31,91 @@ for k in data_dict:
 
 
 circuit={}
-cursor_circuit=arcpy.da.SearchCursor(r'Org Bounds\Circuit Boundaries',["SHAPE@","FEEDERID"])
+cursor_circuit=arcpy.da.SearchCursor('Boundary_Feeder_GO',["SHAPE@","FEEDERID"])
 for row in cursor_circuit:
     fd=row[1]
     shp=row[0]
     circuit[fd]=shp
 
-#find circuits with more r=than one polygons
-
-cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["FEEDERID"])
+#find circuits with more r=than one polygons, manually update the polygon shape of every circuit
+cursor=arcpy.da.SearchCursor('Boundary_Feeder_GO',["FEEDERID"])
 fl=[i[0] for i in cursor]
 set([i for i in fl if fl.count(i)>1])
-
 
 [u'115601', u'072102', u'069301', u'205001', u'099501', u'112401', u'084003', u'048101', u'096301', u'119401', u'077301', u'145501', u'058401']
 
 FEEDERID='058401'
-FEEDERID='115601'
-FEEDERID='099501'
-FEEDERID='112401'
-FEEDERID='205001'
-FEEDERID='048101'
-FEEDERID='072102'
-FEEDERID='069301'
-FEEDERID='096301'
-FEEDERID='119401'
-FEEDERID='077301'
-FEEDERID='145501'
-
 cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
 for i in cursor:
     i
-
 circuit['058401']=i[0]
-circuit['115601']=i[0]
+
+FEEDERID='115601'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['115601'].area
+
+FEEDERID='099501'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
 circuit['099501']=i[0]
+
+FEEDERID='112401'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
 circuit['112401']=i[0]
+
+FEEDERID='205001'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
 circuit['205001']=i[0]
-circuit['048101']=i[0]
-circuit['072102']=i[0]
-circuit['069301']=i[0]
-circuit['096301']=i[0]
+
+FEEDERID='048101'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['048101'].area
+
+FEEDERID='072102'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['072102'].area
+
+FEEDERID='069301'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['069301'].area
+
+FEEDERID='096301'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['096301'].area
+
+
+FEEDERID='119401'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
 circuit['119401']=i[0]
 
+FEEDERID='077301'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['077301'].area
+
+FEEDERID='145501'
+cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
+for i in cursor:
+    i
+circuit['145501'].area
 
 FEEDERID='084003'
 cursor=arcpy.da.SearchCursor("Boundary_Feeder_GO",["SHAPE@"])
@@ -88,9 +130,14 @@ c=a.union(b)
 circuit['084003']=c
 
 142157
-sixteen_feed={}
+#sixteen_feed={}
+empty_zone=[]
+n=0
 import copy
 for k in data_dict:
+    if n%1000==0:
+        print n
+    n=n+1
     if len(data_dict[k])>1:
         feederid=copy.deepcopy(data_dict[k])
         feederid_set=set(feederid)                                            
@@ -112,7 +159,7 @@ for k in data_dict:
                 if poly_16.overlaps(fd2_poly[nr]) or fd2_poly[nr].contains(poly_16) or poly_16.contains(fd2_poly[nr]):
                     sixteen_feed[name_16].append(fd2[nr])
                     #print 't'
-                else:
-                    sixteen_feed[name_16]=copy.deepcopy(fd2)
-                    break        
+            if len(sixteen_feed[name_16])==0:
+                empty_zone.append(name_16)
+                            
 #manually update the tiny circuit
