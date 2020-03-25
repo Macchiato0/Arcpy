@@ -97,8 +97,12 @@ for row in cursor:
 
 #calculate the overlapping section and circuits
 def get_sec_cir(circuit_shp,circuit_fd,sec_shp,sec_nm):
+    n=0
     sec_cir={}
     for i in range(len(sec_nm)):
+        n=n+1
+        if n%1000==0:
+            print n
         sec_cir[sec_nm[i]]=[]  
         for j in range(len(circuit_fd)):
             if sec_shp[i].overlaps(circuit_shp[j]):  
@@ -140,9 +144,16 @@ def merge(dict1,dict2):
 
 
 sec_cir_merge=reduce(lambda a,b : merge(a,b),[sec_cir1,sec_cir2,sec_cir3,sec_cir4,sec_cir5,sec_cir6,sec_cir7])     
-
+len(sec_cir_merge)
+6586
+ 
 #dump dictionary to json file
-
+'''
+check the data generated previously
+with open(r'E:\Data\yfan\sec_cir.json', 'rb') as fp:
+    data_dict = json.load(fp)
+print len(data_dict)    
+'''
 sec_cir_merge
 
 import json
@@ -184,7 +195,7 @@ with open(r'E:\Data\yfan\sec_cir.json', 'r') as myfile:
     data=myfile.read()
 
 sec_cir_merge = json.loads(data)
-
+'''
 for k in sec_cir_check:
     if sec_cir_check[k]!=sec_cir_merge[k]:
         sec_cir_merge[k]=sec_cir_check[k]
@@ -213,11 +224,36 @@ for i in range(len(k_within)):
     for j in range(len(circuit_fd)):
         if circuit_shp[j].contains(k_shp[i]) or k_shp[i].contains(circuit_shp[j]):
             sec_cir_contain[k_within[i]].append(circuit_fd[j])    
+'''
+#test the contain relationship
+sec_cir_contain={}
+n=0
+for i in range(len(sec_nm)):
+    sec_cir_contain[sec_nm[i]]=[]
+    n=n+1
+    if n%1000==0:
+        print n
+    for j in range(len(circuit_fd)):
+        if circuit_shp[j].contains(sec_shp[i]) or sec_shp[i].contains(circuit_shp[j]):
+            sec_cir_contain[sec_nm[i]].append(circuit_fd[j]) 
 
+with open(r'E:\Data\yfan\sec_cir_contain.json', 'w') as fp:
+    json.dump(sec_cir_contain, fp)            
+            
+'''
+sec_cir_merge.keys()==sec_cir_contains.keys()
+True
+'''
+sec_cir_update={}
 for k in sec_cir_contain:
-    if sec_cir_contain[k]!=sec_cir_merge[k]:
-        sec_cir_merge[k]=sec_cir_contain[k]
+    set_2=set(sec_cir_merge[k]).union(set(sec_cir_contain[k]))
+    fd_update=list(set_2)
+    sec_cir_update[k]=fd_update
+    
 
+with open(r'E:\Data\yfan\sec_cir_update_24.json', 'w') as fp:
+    json.dump(sec_cir_update, fp)
+    
 #manually check the section poly without any circuit
 
 [k for k in sec_cir_merge if sec_cir_merge[k]==[]]
