@@ -26,9 +26,10 @@ for k in data_dict:
         where1="SIXTEENTHSECTIONNAME like '{}%'".format(k) 
         cursor1=arcpy.da.SearchCursor(r"CE Landbase\Sixteenth Section",["SIXTEENTHSECTIONNAME"],where1)
         for r1 in cursor1:
-            sixteen_feed[r1]=copy.deepcopy(fd1)
-
-
+            #print r1[0]
+            sixteen_feed[r1[0]]=copy.deepcopy(fd1)
+        
+len(sixteen_feed)
 
 circuit={}
 cursor_circuit=arcpy.da.SearchCursor('Boundary_Feeder_GO',["SHAPE@","FEEDERID"])
@@ -133,7 +134,7 @@ circuit['084003']=c
 #sixteen_feed={}
 empty_zone=[]
 n=0
-import copy
+
 for k in data_dict:
     if n%1000==0:
         print n
@@ -162,4 +163,23 @@ for k in data_dict:
             if len(sixteen_feed[name_16])==0:
                 empty_zone.append(name_16)
                             
-#manually update the tiny circuit
+#empty_zone are sixteen sections not within or overlaps any circuit boundary
+#check if all empty_zone are not in boundary
+len(sixteen_feed)
+386285
+
+for i in empty_zone:
+    sixteen_feed[i]=['None']
+
+with open(r'E:\Data\yfan\sixteen_cir.json', 'w') as fp:
+    json.dump(sixteen_feed, fp)
+
+import csv    
+with open(r'E:\Data\yfan\sixteen_cir.csv', 'wb') as file:
+    writer = csv.writer(file,delimiter=",", quotechar="'", quoting=csv.QUOTE_ALL)
+    writer.writerow(['SIXTEENTHSECTIONNAME', 'Feederid_1', 'Feederid_2', 'Feederid_3', 'Feederid_4', 'Feederid_5', 'Feederid_6', 'Feederid_7', 'Feederid_8', 'Feederid_9', 'Feederid_10', 'Feederid_11', 'Feederid_12', 'Feederid_13', 'Feederid_14', 'Feederid_15', 'Feederid_16', 'Feederid_17'])
+    for k in sixteen_feed:
+        r0=[k]+sixteen_feed[k]
+        r1=[str(v) for v in r0]
+        writer.writerow(r1)
+    
