@@ -279,25 +279,23 @@ sec_cir_merge[u'340222']=[u'069301']
 [k for k in sec_cir_merge if str(type(sec_cir_merge[k]))!="<type 'list'>"]
 
 #save updated dictionary into json file
+'''
 
-with open(r'E:\Data\yfan\sec_cir_update.json', 'w') as fp:
-    json.dump(sec_cir_merge, fp)
+with open(r'E:\Data\yfan\sec_cir_update_24.json', 'rb') as fp:
+    data_dict = json.load(fp)
 
 import csv
 
-with open(r'E:\Data\yfan\section_feeder.csv', 'wb') as file:
+with open(r'E:\Data\yfan\section_feeder_03252020.csv', 'wb') as file:
     writer = csv.writer(file,delimiter=",", quotechar="'", quoting=csv.QUOTE_ALL)
-    writer.writerow(['Section_name', 'Feederid_1', 'Feederid_2', 'Feederid_3', 'Feederid_4', 'Feederid_5', 'Feederid_6', 'Feederid_7', 'Feederid_8', 'Feederid_9', 'Feederid_10', 'Feederid_11', 'Feederid_12', 'Feederid_13', 'Feederid_14', 'Feederid_15', 'Feederid_16', 'Feederid_17', 'Feederid_18', 'Feederid_19', 'Feederid_20', 'Feederid_21', 'Feederid_22', 'Feederid_23'])
-    for k in sec_cir_merge:
-        r0=[k]+sec_cir_merge[k]
+    writer.writerow(['Section_name', 'Feederid_1', 'Feederid_2', 'Feederid_3', 'Feederid_4', 'Feederid_5', 'Feederid_6', 'Feederid_7', 'Feederid_8', 'Feederid_9', 'Feederid_10', 'Feederid_11', 'Feederid_12', 'Feederid_13', 'Feederid_14', 'Feederid_15', 'Feederid_16', 'Feederid_17', 'Feederid_18', 'Feederid_19', 'Feederid_20', 'Feederid_21', 'Feederid_22', 'Feederid_23','Feederid_24','Feederid_25','Feederid_26','Feederid_27','Feederid_28'])
+    for k in data_dict:
+        r0=[k]+data_dict[k]
         r1=[str(v) for v in r0]
         writer.writerow(r1)
 
 
 
-    for k in sec_cir_merge:
-        r0=[k]
-        r1=r0+sec_cir_merge[k]
-        writer.writerow(r1)
+
 
    
