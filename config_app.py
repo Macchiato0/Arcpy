@@ -1,4 +1,3 @@
-
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -1325,9 +1324,9 @@ R137n = Radiobutton(frame2, text='N', value = 'N', variable=v137).grid(row=279,c
 
 v138=StringVar()
 v138.set('N')
-L_137=Label(frame2,text="138.Create 1147 File? ").grid(row=280,column=0,sticky = W) 
-R137y = Radiobutton(frame2, text='Y', value = 'Y', variable=v138).grid(row=280,column=1,sticky = W)
-R137n = Radiobutton(frame2, text='N', value = 'N', variable=v138).grid(row=280,column=2,sticky = W)
+L_138=Label(frame2,text="138.Create 1147 File? ").grid(row=280,column=0,sticky = W) 
+R138y = Radiobutton(frame2, text='Y', value = 'Y', variable=v138).grid(row=280,column=1,sticky = W)
+R138n = Radiobutton(frame2, text='N', value = 'N', variable=v138).grid(row=280,column=2,sticky = W)
 
 
 Label(frame2,text="Database          Data Label - 'PREVIOUS YR '         ").grid(row=281,column=0,columnspan=3,sticky = W)
@@ -1354,6 +1353,241 @@ Label(frame2,text="Area  18 - User - DAL  (NORTHWEST)                    ").grid
 Label(frame2,text="Area  19 - User - ALR  (OWOSSO)                       ").grid(row=302,column=0,columnspan=3,sticky = W)
 Label(frame2,text="Area  20 - User - ERM  (PETOSKEY)                     ").grid(row=303,column=0,columnspan=3,sticky = W)
 Label(frame2,text="Area  21 - User - WEE  (SAGINAW)                      ").grid(row=304,column=0,columnspan=3,sticky = W)
+
+v139=StringVar()
+v139.set('Y')
+L_139=Label(frame2,text="139.Create Group/Subgroup Contingency Files? ").grid(row=305,column=0,sticky = W) 
+R139y = Radiobutton(frame2, text='Y', value = 'Y', variable=v139).grid(row=305,column=1,sticky = W)
+R139n = Radiobutton(frame2, text='N', value = 'N', variable=v139).grid(row=305,column=2,sticky = W)
+
+v140=StringVar()
+v140.set('Y')
+L_140=Label(frame2,text="140.Create Generator Contingency Files? ").grid(row=306,column=0,sticky = W) 
+R140y = Radiobutton(frame2, text='Y', value = 'Y', variable=v140).grid(row=306,column=1,sticky = W)
+R140n = Radiobutton(frame2, text='N', value = 'N', variable=v140).grid(row=306,column=2,sticky = W)
+
+v141=StringVar()
+v141.set('Y')
+L_141=Label(frame2,text="141.Create Capacitor Contingency Files?").grid(row=307,column=0,sticky = W) 
+R141y = Radiobutton(frame2, text='Y', value = 'Y', variable=v141).grid(row=307,column=1,sticky = W)
+R141n = Radiobutton(frame2, text='N', value = 'N', variable=v141).grid(row=307,column=2,sticky = W)
+
+v142=StringVar()
+v142.set('Y')
+L_142=Label(frame2,text="142.Create Plant     Contingency Files?").grid(row=308,column=0,sticky = W) 
+R142y = Radiobutton(frame2, text='Y', value = 'Y', variable=v142).grid(row=308,column=1,sticky = W)
+R142n = Radiobutton(frame2, text='N', value = 'N', variable=v142).grid(row=308,column=2,sticky = W)
+
+v143=StringVar()
+v143.set('Y')
+L_143=Label(frame2,text="143.Create Open Sectionalizing Device Contingency Files?").grid(row=309,column=0,sticky = W) 
+R143y = Radiobutton(frame2, text='Y', value = 'Y', variable=v143).grid(row=309,column=1,sticky = W)
+R143n = Radiobutton(frame2, text='N', value = 'N', variable=v143).grid(row=309,column=2,sticky = W)
+
+v144=StringVar()
+v144.set('Y')
+L_144=Label(frame2,text="144.Contingency Output Code?").grid(row=310,column=0,sticky = W) 
+R144y = Radiobutton(frame2, text='Y - Output Fast, Slow, Manual and Rating Only Devices', value = 'Y', variable=v144).grid(row=311,column=0,sticky = W)
+R144n = Radiobutton(frame2, text='N - Output Only Fast, Slow, and Manual Devices       ', value = 'N', variable=v144).grid(row=312,column=0,sticky = W)
+
+v145=StringVar()
+v145.set('N')
+L_145=Label(frame2,text="145.Create Open 345KV Breaker         Contingencies?").grid(row=313,column=0,sticky = W) 
+R145y = Radiobutton(frame2, text='Y', value = 'Y', variable=v145).grid(row=313,column=1,sticky = W)
+R145n = Radiobutton(frame2, text='N', value = 'N', variable=v145).grid(row=313,column=2,sticky = W)
+
+v146=StringVar()
+v146.set('N')
+L_146=Label(frame2,text="146.Create Open 345KV Bus  Switch     Contingencies?").grid(row=314,column=0,sticky = W) 
+R146y = Radiobutton(frame2, text='Y', value = 'Y', variable=v146).grid(row=314,column=1,sticky = W)
+R146n = Radiobutton(frame2, text='N', value = 'N', variable=v146).grid(row=314,column=2,sticky = W)
+
+v147=StringVar()
+v147.set('Y')
+L_147=Label(frame2,text="147.Create Open 345KV Line Switch     Contingencies?").grid(row=315,column=0,sticky = W) 
+R147y = Radiobutton(frame2, text='Y', value = 'Y', variable=v147).grid(row=315,column=1,sticky = W)
+R147n = Radiobutton(frame2, text='N', value = 'N', variable=v147).grid(row=315,column=2,sticky = W)
+
+v148=StringVar()
+v148.set('N')
+L_148=Label(frame2,text="148.Create Open 69-138KV Breaker      Contingencies?").grid(row=316,column=0,sticky = W) 
+R148y = Radiobutton(frame2, text='Y', value = 'Y', variable=v148).grid(row=316,column=1,sticky = W)
+R148n = Radiobutton(frame2, text='N', value = 'N', variable=v148).grid(row=316,column=2,sticky = W)
+
+v149=StringVar()
+v149.set('N')
+L_149=Label(frame2,text="149.Create Open 69-138KV Bus  Switch  Contingencies?").grid(row=317,column=0,sticky = W) 
+R149y = Radiobutton(frame2, text='Y', value = 'Y', variable=v149).grid(row=317,column=1,sticky = W)
+R149n = Radiobutton(frame2, text='N', value = 'N', variable=v149).grid(row=317,column=2,sticky = W)
+
+v150=StringVar()
+v150.set('Y')
+L_150=Label(frame2,text="150.Create Open 69-138KV Line Switch  Contingencies?").grid(row=318,column=0,sticky = W) 
+R150y = Radiobutton(frame2, text='Y', value = 'Y', variable=v150).grid(row=318,column=1,sticky = W)
+R150n = Radiobutton(frame2, text='N', value = 'N', variable=v150).grid(row=318,column=2,sticky = W)
+
+v151=StringVar()
+v151.set('N')
+L_151=Label(frame2,text="151.Create Open 23,46KV  Breaker      Contingencies?").grid(row=319,column=0,sticky = W) 
+R151y = Radiobutton(frame2, text='Y', value = 'Y', variable=v151).grid(row=319,column=1,sticky = W)
+R151n = Radiobutton(frame2, text='N', value = 'N', variable=v151).grid(row=319,column=2,sticky = W)
+
+v152=StringVar()
+v152.set('N')
+L_152=Label(frame2,text="152.Create Open 23,46KV  Bus  Switch  Contingencies?").grid(row=320,column=0,sticky = W) 
+R152y = Radiobutton(frame2, text='Y', value = 'Y', variable=v152).grid(row=320,column=1,sticky = W)
+R152n = Radiobutton(frame2, text='N', value = 'N', variable=v152).grid(row=320,column=2,sticky = W)
+
+v153=StringVar()
+v153.set('Y')
+L_153=Label(frame2,text="153.Create Open 23,46KV  Line Switch  Contingencies?").grid(row=321,column=0,sticky = W) 
+R153y = Radiobutton(frame2, text='Y', value = 'Y', variable=v153).grid(row=321,column=1,sticky = W)
+R153n = Radiobutton(frame2, text='N', value = 'N', variable=v153).grid(row=321,column=2,sticky = W)
+
+v154=StringVar()
+v154.set('N')
+L_154=Label(frame2,text="154.Create Open Low KV  Breaker       Contingencies?").grid(row=322,column=0,sticky = W) 
+R154y = Radiobutton(frame2, text='Y', value = 'Y', variable=v154).grid(row=322,column=1,sticky = W)
+R154n = Radiobutton(frame2, text='N', value = 'N', variable=v154).grid(row=322,column=2,sticky = W)
+
+v155=StringVar()
+v155.set('N')
+L_155=Label(frame2,text="155.Create Open Low KV  Bus  Switch   Contingencies?").grid(row=323,column=0,sticky = W) 
+R155y = Radiobutton(frame2, text='Y', value = 'Y', variable=v155).grid(row=323,column=1,sticky = W)
+R155n = Radiobutton(frame2, text='N', value = 'N', variable=v155).grid(row=323,column=2,sticky = W)
+
+v156=StringVar()
+v156.set('Y')
+L_156=Label(frame2,text="156.Create Open Low KV  Line Switch   Contingencies?").grid(row=324,column=0,sticky = W) 
+R156y = Radiobutton(frame2, text='Y', value = 'Y', variable=v156).grid(row=324,column=1,sticky = W)
+R156n = Radiobutton(frame2, text='N', value = 'N', variable=v156).grid(row=324,column=2,sticky = W)
+
+v157=StringVar()
+v157.set('S')
+L_157=Label(frame2,text="157.Create Ring Bus Breaker Fail-to-Open Contingency Files?").grid(row=325,column=0,sticky = W) 
+R157g = Radiobutton(frame2, text='G - Create Group Files', value = 'G', variable=v157).grid(row=326,column=0,sticky = W)
+R157s = Radiobutton(frame2, text='S - Create Subgroup Files', value = 'S', variable=v157).grid(row=327,column=0,sticky = W)
+R157n = Radiobutton(frame2, text='N - Dont Create Files', value = 'N', variable=v157).grid(row=328,column=0,sticky = W)
+
+v158 = DoubleVar(frame2,value = -1.0)
+E_v158= Entry(frame2,textvariable=v158,width=10)
+E_v158.grid(row=329, column = 2, sticky = W)
+L158=Label(frame2,text="158.Override Ring Bus Breaker Fail-to-Open Outage Rate").grid(row=330,column=0,columnspan = 2,sticky = W)
+
+v159=StringVar()
+v159.set('Y')
+L_159=Label(frame2,text="159.Create Buses Which Must Not Be Shed File and Fast?").grid(row=331,column=0,sticky = W) 
+R159y = Radiobutton(frame2, text='Y', value = 'Y', variable=v159).grid(row=331,column=1,sticky = W)
+R159n = Radiobutton(frame2, text='N', value = 'N', variable=v159).grid(row=331,column=2,sticky = W)
+
+
+Label(frame2,text="            Sectionalizing Equipment File?                       (Y/N)").grid(row=332,column=0,columnspan=3,sticky = W)
+
+
+v160=StringVar()
+v160.set('Y')
+L_160=Label(frame2,text="160.Shed Interchange (INT) Buses?                      (Y/N)").grid(row=333,column=0,sticky = W) 
+R160y = Radiobutton(frame2, text='Y', value = 'Y', variable=v160).grid(row=333,column=1,sticky = W)
+R160n = Radiobutton(frame2, text='N', value = 'N', variable=v160).grid(row=333,column=2,sticky = W)
+
+v161=StringVar()
+v161.set('Y')
+L_161=Label(frame2,text="161.Shed Wholesale Power (WHSP) Buses?                 (Y/N)").grid(row=334,column=0,sticky = W) 
+R161y = Radiobutton(frame2, text='Y', value = 'Y', variable=v161).grid(row=334,column=1,sticky = W)
+R161n = Radiobutton(frame2, text='N', value = 'N', variable=v161).grid(row=334,column=2,sticky = W)
+
+v162=StringVar()
+v162.set('Y')
+L_162=Label(frame2,text="162.Shed Wholesale Transmission (WHST) Buses?          (Y/N)").grid(row=335,column=0,sticky = W) 
+R162y = Radiobutton(frame2, text='Y', value = 'Y', variable=v162).grid(row=335,column=1,sticky = W)
+R162n = Radiobutton(frame2, text='N', value = 'N', variable=v162).grid(row=335,column=2,sticky = W)
+
+v163=StringVar()
+v163.set('Y')
+L_163=Label(frame2,text="163.Shed SEC (SEC) Buses?                              (Y/N)").grid(row=336,column=0,sticky = W) 
+R163y = Radiobutton(frame2, text='Y', value = 'Y', variable=v163).grid(row=336,column=1,sticky = W)
+R163n = Radiobutton(frame2, text='N', value = 'N', variable=v163).grid(row=336,column=2,sticky = W)
+
+v164=StringVar()
+v164.set('Y')
+L_164=Label(frame2,text="164.Shed Generator (GEN) Buses?                        (Y/N)").grid(row=337,column=0,sticky = W) 
+R164y = Radiobutton(frame2, text='Y', value = 'Y', variable=v164).grid(row=337,column=1,sticky = W)
+R164n = Radiobutton(frame2, text='N', value = 'N', variable=v164).grid(row=337,column=2,sticky = W)
+
+v165=StringVar()
+v165.set('Y')
+L_165=Label(frame2,text="165.Shed Consumers Energy HQ (HEAD) Buses?             (Y/N)").grid(row=338,column=0,sticky = W) 
+R165y = Radiobutton(frame2, text='Y', value = 'Y', variable=v165).grid(row=338,column=1,sticky = W)
+R165n = Radiobutton(frame2, text='N', value = 'N', variable=v165).grid(row=338,column=2,sticky = W)
+
+v166=StringVar()
+v166.set('Y')
+L_166=Label(frame2,text="166.Shed Hospital (HOSP) Buses?                        (Y/N)").grid(row=339,column=0,sticky = W) 
+R166y = Radiobutton(frame2, text='Y', value = 'Y', variable=v166).grid(row=339,column=1,sticky = W)
+R166n = Radiobutton(frame2, text='N', value = 'N', variable=v166).grid(row=339,column=2,sticky = W)
+
+v167=StringVar()
+v167.set('Y')
+L_167=Label(frame2,text="167.Shed Not-to-Be-Shed (SHED) Buses?                  (Y/N)").grid(row=340,column=0,sticky = W) 
+R167y = Radiobutton(frame2, text='Y', value = 'Y', variable=v167).grid(row=340,column=1,sticky = W)
+R167n = Radiobutton(frame2, text='N', value = 'N', variable=v167).grid(row=340,column=2,sticky = W)
+
+v168=StringVar()
+v168.set('Y')
+L_168=Label(frame2,text="168.Shed Customer Sub - Not Regulated (CSNR) Buses?    (Y/N)").grid(row=341,column=0,sticky = W) 
+R168y = Radiobutton(frame2, text='Y', value = 'Y', variable=v168).grid(row=341,column=1,sticky = W)
+R168n = Radiobutton(frame2, text='N', value = 'N', variable=v168).grid(row=341,column=2,sticky = W)
+
+v169=StringVar()
+v169.set('Y')
+L_169=Label(frame2,text="169.Shed Welder Sub (WELD) Buses?                      (Y/N)").grid(row=342,column=0,sticky = W) 
+R169y = Radiobutton(frame2, text='Y', value = 'Y', variable=v169).grid(row=342,column=1,sticky = W)
+R169n = Radiobutton(frame2, text='N', value = 'N', variable=v169).grid(row=342,column=2,sticky = W)
+
+v170=StringVar()
+v170.set('Y')
+L_170=Label(frame2,text="170.Create Contingency Analysis Auxiliary Data Base?").grid(row=343,column=0,sticky = W) 
+R170y = Radiobutton(frame2, text='Y', value = 'Y', variable=v170).grid(row=343,column=1,sticky = W)
+R170n = Radiobutton(frame2, text='N', value = 'N', variable=v170).grid(row=343,column=2,sticky = W)
+
+v171=StringVar()
+v171.set('Y')
+L_171=Label(frame2,text="171.Create BTF Database Files? ").grid(row=344,column=0,sticky = W) 
+R171y = Radiobutton(frame2, text='Y', value = 'Y', variable=v171).grid(row=344,column=1,sticky = W)
+R171n = Radiobutton(frame2, text='N', value = 'N', variable=v171).grid(row=344,column=2,sticky = W)
+
+v172=StringVar()
+v172.set('Y')
+L_172=Label(frame2,text="172.Create Breaker Duty Files?                      (Y/N)").grid(row=345,column=0,sticky = W) 
+R172y = Radiobutton(frame2, text='Y', value = 'Y', variable=v172).grid(row=345,column=1,sticky = W)
+R172n = Radiobutton(frame2, text='N', value = 'N', variable=v172).grid(row=345,column=2,sticky = W)
+
+v173=StringVar()
+v173.set('Y')
+L_173=Label(frame2,text="173.Create Equipment Listing? ").grid(row=346,column=0,sticky = W) 
+R173y = Radiobutton(frame2, text='Y', value = 'Y', variable=v173).grid(row=346,column=1,sticky = W)
+R173n = Radiobutton(frame2, text='N', value = 'N', variable=v173).grid(row=346,column=2,sticky = W)
+
+v174=StringVar()
+v174.set('Y')
+L_174=Label(frame2,text="174.Create p1145 PSSE File?  ").grid(row=347,column=0,sticky = W) 
+R174y = Radiobutton(frame2, text='Y', value = 'Y', variable=v174).grid(row=347,column=1,sticky = W)
+R174n = Radiobutton(frame2, text='N', value = 'N', variable=v174).grid(row=347,column=2,sticky = W)
+
+v175=StringVar()
+v175.set('Y')
+L_175=Label(frame2,text="175.Create Relay Loadability Data Listing?").grid(row=348,column=0,sticky = W) 
+R175y = Radiobutton(frame2, text='Y', value = 'Y', variable=v175).grid(row=348,column=1,sticky = W)
+R175n = Radiobutton(frame2, text='N', value = 'N', variable=v175).grid(row=348,column=2,sticky = W)
+
+v176=StringVar()
+v176.set('Y')
+L_176=Label(frame2,text="176.Create Load Search Station Data File?").grid(row=349,column=0,sticky = W) 
+R176y = Radiobutton(frame2, text='N - No Output', value = 'Y', variable=v176).grid(row=349,column=1,sticky = W)
+R176c = Radiobutton(frame2, text='C - Create with No Station Name / Bus Name Cross Reference', value = 'C', variable=v176).grid(row=349,column=2,sticky = W)
+R176n = Radiobutton(frame2, text='Y - Create with With Station Name / Bus Name Cross Reference', value = 'N', variable=v176).grid(row=349,column=1,sticky = W)
+
+
 
 root.mainloop()  
 
